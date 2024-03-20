@@ -1,8 +1,7 @@
-package com.mentorproject1.repository;
+package com.mentorship.javaeats.repository;
 
-import com.mentorproject1.entity.Cart;
+import com.mentorship.javaeats.model.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface CartRepository extends JpaRepository<Cart, Integer>, JpaSpecificationExecutor<Cart> {
+public interface CartRepository extends JpaRepository<Cart, Integer> {
 }

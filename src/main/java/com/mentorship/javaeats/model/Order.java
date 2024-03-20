@@ -1,183 +1,148 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-public class Order {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "\"order\"")
+public class Order implements Serializable {
+    private static final long serialVersionUID = 5237255932579833792L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id", nullable = false)
+    private Integer order_id;
+
     @Column(name = "customer_id", nullable = false)
-    private int customerId;
-    @Basic
+    private Integer customer_id;
+
     @Column(name = "order_date", nullable = false)
-    private Timestamp orderDate;
-    @Basic
-    @Column(name = "subtotal", nullable = false, precision = 0)
-    private BigInteger subtotal;
-    @Basic
-    @Column(name = "tax", nullable = false, precision = 0)
-    private BigInteger tax;
-    @Basic
-    @Column(name = "total", nullable = false, precision = 0)
-    private BigInteger total;
-    @Basic
+    private Instant order_date;
+
+    @Column(name = "subtotal", nullable = false)
+    private BigDecimal subtotal;
+
+    @Column(name = "tax", nullable = false)
+    private BigDecimal tax;
+
+    @Column(name = "total", nullable = false)
+    private BigDecimal total;
+
     @Column(name = "order_status_id", nullable = false)
-    private int orderStatusId;
-    @Basic
+    private Integer order_status_id;
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
-    private Customer customerByCustomerId;
-    @ManyToOne
-    @JoinColumn(name = "order_status_id", referencedColumnName = "id", nullable = false)
-    private OrderStatus orderStatusByOrderStatusId;
-    @OneToMany(mappedBy = "orderByOrderId")
-    private Collection<OrderItem> orderItemsById;
-    @OneToMany(mappedBy = "orderByOrderId")
-    private Collection<OrderTracking> orderTrackingsById;
-    @OneToMany(mappedBy = "orderByOrderId")
-    private Collection<Transaction> transactionsById;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    @OneToMany(mappedBy = "order_id")
+    private Set<OrderItem> orderItems = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "order_id")
+    private Set<OrderTracking> orderTrackings = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "order_id")
+    private Set<Transaction> transactions = new LinkedHashSet<>();
+
+    public Integer getOrder_id() {
+        return order_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrder_id(Integer order_id) {
+        this.order_id = order_id;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public Integer getCustomer_id() {
+        return customer_id;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setCustomer_id(Integer customer_id) {
+        this.customer_id = customer_id;
     }
 
-    public Timestamp getOrderDate() {
-        return orderDate;
+    public Instant getOrder_date() {
+        return order_date;
     }
 
-    public void setOrderDate(Timestamp orderDate) {
-        this.orderDate = orderDate;
+    public void setOrder_date(Instant order_date) {
+        this.order_date = order_date;
     }
 
-    public BigInteger getSubtotal() {
+    public BigDecimal getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(BigInteger subtotal) {
+    public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
     }
 
-    public BigInteger getTax() {
+    public BigDecimal getTax() {
         return tax;
     }
 
-    public void setTax(BigInteger tax) {
+    public void setTax(BigDecimal tax) {
         this.tax = tax;
     }
 
-    public BigInteger getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(BigInteger total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
-    public int getOrderStatusId() {
-        return orderStatusId;
+    public Integer getOrder_status_id() {
+        return order_status_id;
     }
 
-    public void setOrderStatusId(int orderStatusId) {
-        this.orderStatusId = orderStatusId;
+    public void setOrder_status_id(Integer order_status_id) {
+        this.order_status_id = order_status_id;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return id == order.id && customerId == order.customerId && orderStatusId == order.orderStatusId && Objects.equals(orderDate, order.orderDate) && Objects.equals(subtotal, order.subtotal) && Objects.equals(tax, order.tax) && Objects.equals(total, order.total) && Objects.equals(createdOn, order.createdOn) && Objects.equals(updatedOn, order.updatedOn);
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, customerId, orderDate, subtotal, tax, total, orderStatusId, createdOn, updatedOn);
+    public void setOrderItems(Set<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
-    public Customer getCustomerByCustomerId() {
-        return customerByCustomerId;
+    public Set<OrderTracking> getOrderTrackings() {
+        return orderTrackings;
     }
 
-    public void setCustomerByCustomerId(Customer customerByCustomerId) {
-        this.customerByCustomerId = customerByCustomerId;
+    public void setOrderTrackings(Set<OrderTracking> orderTrackings) {
+        this.orderTrackings = orderTrackings;
     }
 
-    public OrderStatus getOrderStatusByOrderStatusId() {
-        return orderStatusByOrderStatusId;
+    public Set<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public void setOrderStatusByOrderStatusId(OrderStatus orderStatusByOrderStatusId) {
-        this.orderStatusByOrderStatusId = orderStatusByOrderStatusId;
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
-    public Collection<OrderItem> getOrderItemsById() {
-        return orderItemsById;
-    }
-
-    public void setOrderItemsById(Collection<OrderItem> orderItemsById) {
-        this.orderItemsById = orderItemsById;
-    }
-
-    public Collection<OrderTracking> getOrderTrackingsById() {
-        return orderTrackingsById;
-    }
-
-    public void setOrderTrackingsById(Collection<OrderTracking> orderTrackingsById) {
-        this.orderTrackingsById = orderTrackingsById;
-    }
-
-    public Collection<Transaction> getTransactionsById() {
-        return transactionsById;
-    }
-
-    public void setTransactionsById(Collection<Transaction> transactionsById) {
-        this.transactionsById = transactionsById;
-    }
 }

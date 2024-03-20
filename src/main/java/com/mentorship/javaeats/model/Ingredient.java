@@ -1,60 +1,57 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-public class Ingredient {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "ingredient")
+public class Ingredient implements Serializable {
+    private static final long serialVersionUID = 1107477722230800809L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
-    @Column(name = "name", nullable = false, length = 255)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ingredient_id", nullable = false)
+    private Integer ingredient_id;
+
+    @Column(name = "name", nullable = false)
     private String name;
-    @Basic
-    @Column(name = "description", nullable = true, length = -1)
+
+    @Column(name = "description")
     private String description;
-    @Basic
-    @Column(name = "allergens", nullable = true, length = -1)
+
+    @Column(name = "allergens")
     private String allergens;
-    @Basic
-    @Column(name = "unit", nullable = true, length = 255)
+
+    @Column(name = "unit")
     private String unit;
-    @Basic
-    @Column(name = "cost", nullable = true, precision = 0)
-    private BigInteger cost;
-    @Basic
+
+    @Column(name = "cost")
+    private BigDecimal cost;
+
     @Column(name = "stock_quantity", nullable = false)
-    private int stockQuantity;
-    @Basic
-    @Column(name = "storage_instructions", nullable = true, length = -1)
-    private String storageInstructions;
-    @Basic
+    private Integer stock_quantity;
+
+    @Column(name = "storage_instructions")
+    private String storage_instructions;
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @OneToMany(mappedBy = "ingredientByIngredientId")
-    private Collection<MenuItemIngredient> menuItemIngredientsById;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    @OneToMany(mappedBy = "ingredient_id")
+    private Set<MenuItemIngredient> menuItemIngredients = new LinkedHashSet<>();
+
+    public Integer getIngredient_id() {
+        return ingredient_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIngredient_id(Integer ingredient_id) {
+        this.ingredient_id = ingredient_id;
     }
 
     public String getName() {
@@ -89,64 +86,52 @@ public class Ingredient {
         this.unit = unit;
     }
 
-    public BigInteger getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(BigInteger cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 
-    public int getStockQuantity() {
-        return stockQuantity;
+    public Integer getStock_quantity() {
+        return stock_quantity;
     }
 
-    public void setStockQuantity(int stockQuantity) {
-        this.stockQuantity = stockQuantity;
+    public void setStock_quantity(Integer stock_quantity) {
+        this.stock_quantity = stock_quantity;
     }
 
-    public String getStorageInstructions() {
-        return storageInstructions;
+    public String getStorage_instructions() {
+        return storage_instructions;
     }
 
-    public void setStorageInstructions(String storageInstructions) {
-        this.storageInstructions = storageInstructions;
+    public void setStorage_instructions(String storage_instructions) {
+        this.storage_instructions = storage_instructions;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ingredient that = (Ingredient) o;
-        return id == that.id && stockQuantity == that.stockQuantity && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(allergens, that.allergens) && Objects.equals(unit, that.unit) && Objects.equals(cost, that.cost) && Objects.equals(storageInstructions, that.storageInstructions) && Objects.equals(createdOn, that.createdOn) && Objects.equals(updatedOn, that.updatedOn);
+    public Set<MenuItemIngredient> getMenuItemIngredients() {
+        return menuItemIngredients;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, allergens, unit, cost, stockQuantity, storageInstructions, createdOn, updatedOn);
+    public void setMenuItemIngredients(Set<MenuItemIngredient> menuItemIngredients) {
+        this.menuItemIngredients = menuItemIngredients;
     }
 
-    public Collection<MenuItemIngredient> getMenuItemIngredientsById() {
-        return menuItemIngredientsById;
-    }
-
-    public void setMenuItemIngredientsById(Collection<MenuItemIngredient> menuItemIngredientsById) {
-        this.menuItemIngredientsById = menuItemIngredientsById;
-    }
 }

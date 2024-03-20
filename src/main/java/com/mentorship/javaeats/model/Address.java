@@ -1,80 +1,73 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
 
 @Entity
-public class Address {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "address")
+public class Address implements Serializable {
+    private static final long serialVersionUID = -5419195998414018035L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "address_id", nullable = false)
+    private Integer address_id;
+
     @Column(name = "customer_id", nullable = false)
-    private int customerId;
-    @Basic
-    @Column(name = "address_line1", nullable = false, length = 255)
-    private String addressLine1;
-    @Basic
-    @Column(name = "address_line2", nullable = true, length = 255)
-    private String addressLine2;
-    @Basic
-    @Column(name = "city", nullable = false, length = 255)
+    private Integer customer_id;
+
+    @Column(name = "address_line1", nullable = false)
+    private String address_line1;
+
+    @Column(name = "address_line2")
+    private String address_line2;
+
+    @Column(name = "city", nullable = false)
     private String city;
-    @Basic
-    @Column(name = "street", nullable = true, length = 255)
+
+    @Column(name = "street")
     private String street;
-    @Basic
-    @Column(name = "country", nullable = false, length = 255)
+
+    @Column(name = "country", nullable = false)
     private String country;
-    @Basic
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
-    private Customer customerByCustomerId;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+
+    public Integer getAddress_id() {
+        return address_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAddress_id(Integer address_id) {
+        this.address_id = address_id;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public Integer getCustomer_id() {
+        return customer_id;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setCustomer_id(Integer customer_id) {
+        this.customer_id = customer_id;
     }
 
-    public String getAddressLine1() {
-        return addressLine1;
+    public String getAddress_line1() {
+        return address_line1;
     }
 
-    public void setAddressLine1(String addressLine1) {
-        this.addressLine1 = addressLine1;
+    public void setAddress_line1(String address_line1) {
+        this.address_line1 = address_line1;
     }
 
-    public String getAddressLine2() {
-        return addressLine2;
+    public String getAddress_line2() {
+        return address_line2;
     }
 
-    public void setAddressLine2(String addressLine2) {
-        this.addressLine2 = addressLine2;
+    public void setAddress_line2(String address_line2) {
+        this.address_line2 = address_line2;
     }
 
     public String getCity() {
@@ -101,40 +94,21 @@ public class Address {
         this.country = country;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return id == address.id && customerId == address.customerId && Objects.equals(addressLine1, address.addressLine1) && Objects.equals(addressLine2, address.addressLine2) && Objects.equals(city, address.city) && Objects.equals(street, address.street) && Objects.equals(country, address.country) && Objects.equals(createdOn, address.createdOn) && Objects.equals(updatedOn, address.updatedOn);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, customerId, addressLine1, addressLine2, city, street, country, createdOn, updatedOn);
-    }
-
-    public Customer getCustomerByCustomerId() {
-        return customerByCustomerId;
-    }
-
-    public void setCustomerByCustomerId(Customer customerByCustomerId) {
-        this.customerByCustomerId = customerByCustomerId;
-    }
 }

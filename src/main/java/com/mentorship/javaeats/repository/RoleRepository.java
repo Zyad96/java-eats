@@ -1,8 +1,7 @@
-package com.mentorproject1.repository;
+package com.mentorship.javaeats.repository;
 
-import com.mentorproject1.entity.Role;
+import com.mentorship.javaeats.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface RoleRepository extends JpaRepository<Role, Integer>, JpaSpecificationExecutor<Role> {
+public interface RoleRepository extends JpaRepository<Role, Integer> {
 }

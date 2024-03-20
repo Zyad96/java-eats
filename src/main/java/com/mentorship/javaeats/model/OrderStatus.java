@@ -1,42 +1,38 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "order_status", schema = "public", catalog = "javaeat_lites")
-public class OrderStatus {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "order_status")
+public class OrderStatus implements Serializable {
+    private static final long serialVersionUID = 44758455531601541L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
-    @Column(name = "status", nullable = false, length = 255)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_status_id", nullable = false)
+    private Integer order_status_id;
+
+    @Column(name = "status", nullable = false)
     private String status;
-    @Basic
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @OneToMany(mappedBy = "orderStatusByOrderStatusId")
-    private Collection<Order> ordersById;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    @OneToMany(mappedBy = "order_status_id")
+    private Set<Order> orders = new LinkedHashSet<>();
+
+    public Integer getOrder_status_id() {
+        return order_status_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrder_status_id(Integer order_status_id) {
+        this.order_status_id = order_status_id;
     }
 
     public String getStatus() {
@@ -47,40 +43,28 @@ public class OrderStatus {
         this.status = status;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderStatus that = (OrderStatus) o;
-        return id == that.id && Objects.equals(status, that.status) && Objects.equals(createdOn, that.createdOn) && Objects.equals(updatedOn, that.updatedOn);
+    public Set<Order> getOrders() {
+        return orders;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, status, createdOn, updatedOn);
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
-    public Collection<Order> getOrdersById() {
-        return ordersById;
-    }
-
-    public void setOrdersById(Collection<Order> ordersById) {
-        this.ordersById = ordersById;
-    }
 }

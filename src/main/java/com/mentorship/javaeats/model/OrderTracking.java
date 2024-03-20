@@ -1,108 +1,79 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
 
 @Entity
-@Table(name = "order_tracking", schema = "public", catalog = "javaeat_lites")
-public class OrderTracking {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "order_tracking")
+public class OrderTracking implements Serializable {
+    private static final long serialVersionUID = 667587576458909021L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_tracking_id", nullable = false)
+    private Integer order_tracking_id;
+
     @Column(name = "order_id", nullable = false)
-    private int orderId;
-    @Basic
-    @Column(name = "current_location", nullable = false, length = 255)
-    private String currentLocation;
-    @Basic
+    private Integer order_id;
+
+    @Column(name = "current_location", nullable = false)
+    private String current_location;
+
     @Column(name = "estimated_delivery_time", nullable = false)
-    private Timestamp estimatedDeliveryTime;
-    @Basic
+    private Instant estimated_delivery_time;
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
-    private Order orderByOrderId;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    public Integer getOrder_tracking_id() {
+        return order_tracking_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrder_tracking_id(Integer order_tracking_id) {
+        this.order_tracking_id = order_tracking_id;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public Integer getOrder_id() {
+        return order_id;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setOrder_id(Integer order_id) {
+        this.order_id = order_id;
     }
 
-    public String getCurrentLocation() {
-        return currentLocation;
+    public String getCurrent_location() {
+        return current_location;
     }
 
-    public void setCurrentLocation(String currentLocation) {
-        this.currentLocation = currentLocation;
+    public void setCurrent_location(String current_location) {
+        this.current_location = current_location;
     }
 
-    public Timestamp getEstimatedDeliveryTime() {
-        return estimatedDeliveryTime;
+    public Instant getEstimated_delivery_time() {
+        return estimated_delivery_time;
     }
 
-    public void setEstimatedDeliveryTime(Timestamp estimatedDeliveryTime) {
-        this.estimatedDeliveryTime = estimatedDeliveryTime;
+    public void setEstimated_delivery_time(Instant estimated_delivery_time) {
+        this.estimated_delivery_time = estimated_delivery_time;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderTracking that = (OrderTracking) o;
-        return id == that.id && orderId == that.orderId && Objects.equals(currentLocation, that.currentLocation) && Objects.equals(estimatedDeliveryTime, that.estimatedDeliveryTime) && Objects.equals(createdOn, that.createdOn) && Objects.equals(updatedOn, that.updatedOn);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, orderId, currentLocation, estimatedDeliveryTime, createdOn, updatedOn);
-    }
-
-    public Order getOrderByOrderId() {
-        return orderByOrderId;
-    }
-
-    public void setOrderByOrderId(Order orderByOrderId) {
-        this.orderByOrderId = orderByOrderId;
-    }
 }

@@ -1,63 +1,59 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-public class User {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "\"user\"")
+public class User implements Serializable {
+    private static final long serialVersionUID = -4255995890103524333L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
-    @Column(name = "name", nullable = false, length = 255)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false)
+    private Integer user_id;
+
+    @Column(name = "name", nullable = false)
     private String name;
-    @Basic
-    @Column(name = "email", nullable = false, length = 255)
+
+    @Column(name = "email", nullable = false)
     private String email;
-    @Basic
-    @Column(name = "password", nullable = false, length = 255)
+
+    @Column(name = "password", nullable = false)
     private String password;
-    @Basic
+
     @Column(name = "user_type_id", nullable = false)
-    private int userTypeId;
-    @Basic
-    @Column(name = "phone", nullable = false, length = 255)
+    private Integer user_type_id;
+
+    @Column(name = "phone", nullable = false)
     private String phone;
-    @Basic
-    @Column(name = "status", nullable = false, length = 255)
+
+    @Column(name = "status", nullable = false)
     private String status;
-    @Basic
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @OneToMany(mappedBy = "userByUserId")
-    private Collection<Auditing> auditingsById;
-    @OneToMany(mappedBy = "userByUserId")
-    private Collection<Customer> customersById;
-    @ManyToOne
-    @JoinColumn(name = "user_type_id", referencedColumnName = "id", nullable = false)
-    private UserType userTypeByUserTypeId;
-    @OneToMany(mappedBy = "userByUserId")
-    private Collection<UserRole> userRolesById;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    @OneToMany(mappedBy = "user_id")
+    private Set<Auditing> auditings = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user_id")
+    private Set<Customer> customers = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user_id")
+    private Set<UserRole> userRoles = new LinkedHashSet<>();
+
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public String getName() {
@@ -84,12 +80,12 @@ public class User {
         this.password = password;
     }
 
-    public int getUserTypeId() {
-        return userTypeId;
+    public Integer getUser_type_id() {
+        return user_type_id;
     }
 
-    public void setUserTypeId(int userTypeId) {
-        this.userTypeId = userTypeId;
+    public void setUser_type_id(Integer user_type_id) {
+        this.user_type_id = user_type_id;
     }
 
     public String getPhone() {
@@ -108,64 +104,44 @@ public class User {
         this.status = status;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id && userTypeId == user.userTypeId && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phone, user.phone) && Objects.equals(status, user.status) && Objects.equals(createdOn, user.createdOn) && Objects.equals(updatedOn, user.updatedOn);
+    public Set<Auditing> getAuditings() {
+        return auditings;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, email, password, userTypeId, phone, status, createdOn, updatedOn);
+    public void setAuditings(Set<Auditing> auditings) {
+        this.auditings = auditings;
     }
 
-    public Collection<Auditing> getAuditingsById() {
-        return auditingsById;
+    public Set<Customer> getCustomers() {
+        return customers;
     }
 
-    public void setAuditingsById(Collection<Auditing> auditingsById) {
-        this.auditingsById = auditingsById;
+    public void setCustomers(Set<Customer> customers) {
+        this.customers = customers;
     }
 
-    public Collection<Customer> getCustomersById() {
-        return customersById;
+    public Set<UserRole> getUserRoles() {
+        return userRoles;
     }
 
-    public void setCustomersById(Collection<Customer> customersById) {
-        this.customersById = customersById;
+    public void setUserRoles(Set<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 
-    public UserType getUserTypeByUserTypeId() {
-        return userTypeByUserTypeId;
-    }
-
-    public void setUserTypeByUserTypeId(UserType userTypeByUserTypeId) {
-        this.userTypeByUserTypeId = userTypeByUserTypeId;
-    }
-
-    public Collection<UserRole> getUserRolesById() {
-        return userRolesById;
-    }
-
-    public void setUserRolesById(Collection<UserRole> userRolesById) {
-        this.userRolesById = userRolesById;
-    }
 }

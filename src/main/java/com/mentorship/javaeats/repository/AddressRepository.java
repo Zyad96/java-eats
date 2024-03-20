@@ -1,8 +1,7 @@
-package com.mentorproject1.repository;
+package com.mentorship.javaeats.repository;
 
-import com.mentorproject1.entity.Address;
+import com.mentorship.javaeats.model.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface AddressRepository extends JpaRepository<Address, Integer>, JpaSpecificationExecutor<Address> {
+public interface AddressRepository extends JpaRepository<Address, Integer> {
 }

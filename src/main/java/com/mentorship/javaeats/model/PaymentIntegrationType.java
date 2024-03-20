@@ -1,45 +1,41 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "payment_integration_type", schema = "public", catalog = "javaeat_lites")
-public class PaymentIntegrationType {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "payment_integration_type")
+public class PaymentIntegrationType implements Serializable {
+    private static final long serialVersionUID = -2501207728000428225L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
-    @Column(name = "name", nullable = false, length = 255)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "payment_integration_type_id", nullable = false)
+    private Integer payment_integration_type_id;
+
+    @Column(name = "name", nullable = false)
     private String name;
-    @Basic
-    @Column(name = "description", nullable = true, length = -1)
+
+    @Column(name = "description")
     private String description;
-    @Basic
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @OneToMany(mappedBy = "paymentIntegrationTypeByPaymentIntegrationTypeId")
-    private Collection<PaymentTypeConfiguration> paymentTypeConfigurationsById;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    @OneToMany(mappedBy = "payment_integration_type_id")
+    private Set<PaymentTypeConfiguration> paymentTypeConfigurations = new LinkedHashSet<>();
+
+    public Integer getPayment_integration_type_id() {
+        return payment_integration_type_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPayment_integration_type_id(Integer payment_integration_type_id) {
+        this.payment_integration_type_id = payment_integration_type_id;
     }
 
     public String getName() {
@@ -58,40 +54,28 @@ public class PaymentIntegrationType {
         this.description = description;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PaymentIntegrationType that = (PaymentIntegrationType) o;
-        return id == that.id && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(createdOn, that.createdOn) && Objects.equals(updatedOn, that.updatedOn);
+    public Set<PaymentTypeConfiguration> getPaymentTypeConfigurations() {
+        return paymentTypeConfigurations;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, createdOn, updatedOn);
+    public void setPaymentTypeConfigurations(Set<PaymentTypeConfiguration> paymentTypeConfigurations) {
+        this.paymentTypeConfigurations = paymentTypeConfigurations;
     }
 
-    public Collection<PaymentTypeConfiguration> getPaymentTypeConfigurationsById() {
-        return paymentTypeConfigurationsById;
-    }
-
-    public void setPaymentTypeConfigurationsById(Collection<PaymentTypeConfiguration> paymentTypeConfigurationsById) {
-        this.paymentTypeConfigurationsById = paymentTypeConfigurationsById;
-    }
 }

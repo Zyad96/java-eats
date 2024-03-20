@@ -1,88 +1,82 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-public class Cart {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "cart")
+public class Cart implements Serializable {
+    private static final long serialVersionUID = 1089589191180862750L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart_id", nullable = false)
+    private Integer cart_id;
+
     @Column(name = "customer_id", nullable = false)
-    private int customerId;
-    @Basic
-    @Column(name = "subtotal", nullable = false, precision = 0)
-    private BigInteger subtotal;
-    @Basic
-    @Column(name = "tax", nullable = false, precision = 0)
-    private BigInteger tax;
-    @Basic
-    @Column(name = "total", nullable = false, precision = 0)
-    private BigInteger total;
-    @Basic
-    @Column(name = "status", nullable = false, length = 255)
+    private Integer customer_id;
+
+    @Column(name = "subtotal", nullable = false)
+    private BigDecimal subtotal;
+
+    @Column(name = "tax", nullable = false)
+    private BigDecimal tax;
+
+    @Column(name = "total", nullable = false)
+    private BigDecimal total;
+
+    @Column(name = "status", nullable = false)
     private String status;
-    @Basic
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
-    private Customer customerByCustomerId;
-    @OneToMany(mappedBy = "cartByCartId")
-    private Collection<CartItem> cartItemsById;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    @OneToMany(mappedBy = "cart_id")
+    private Set<CartItem> cartItems = new LinkedHashSet<>();
+
+    public Integer getCart_id() {
+        return cart_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCart_id(Integer cart_id) {
+        this.cart_id = cart_id;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public Integer getCustomer_id() {
+        return customer_id;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setCustomer_id(Integer customer_id) {
+        this.customer_id = customer_id;
     }
 
-    public BigInteger getSubtotal() {
+    public BigDecimal getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(BigInteger subtotal) {
+    public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
     }
 
-    public BigInteger getTax() {
+    public BigDecimal getTax() {
         return tax;
     }
 
-    public void setTax(BigInteger tax) {
+    public void setTax(BigDecimal tax) {
         this.tax = tax;
     }
 
-    public BigInteger getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(BigInteger total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
@@ -94,48 +88,35 @@ public class Cart {
         this.status = status;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cart cart = (Cart) o;
-        return id == cart.id && customerId == cart.customerId && Objects.equals(subtotal, cart.subtotal) && Objects.equals(tax, cart.tax) && Objects.equals(total, cart.total) && Objects.equals(status, cart.status) && Objects.equals(createdOn, cart.createdOn) && Objects.equals(updatedOn, cart.updatedOn);
+    public Set<CartItem> getCartItems() {
+        return cartItems;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, customerId, subtotal, tax, total, status, createdOn, updatedOn);
+    public void setCartItems(Set<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
-
-    public Customer getCustomerByCustomerId() {
-        return customerByCustomerId;
-    }
-
-    public void setCustomerByCustomerId(Customer customerByCustomerId) {
-        this.customerByCustomerId = customerByCustomerId;
-    }
-
-    public Collection<CartItem> getCartItemsById() {
-        return cartItemsById;
-    }
-
-    public void setCartItemsById(Collection<CartItem> cartItemsById) {
-        this.cartItemsById = cartItemsById;
+    public CartItem getCartItem(int cartItemId){
+        for(CartItem item : cartItems){
+            if (item.getCart_item_id() == cartItemId){
+                return item;
+            }
+        }
+        return null;
     }
 }

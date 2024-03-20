@@ -1,126 +1,103 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-public class Customer {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "customer")
+public class Customer implements Serializable {
+    private static final long serialVersionUID = -8242597705528208474L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customer_id", nullable = false)
+    private Integer customer_id;
+
     @Column(name = "user_id", nullable = false)
-    private int userId;
-    @Basic
+    private Integer user_id;
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @OneToMany(mappedBy = "customerByCustomerId")
-    private Collection<Address> addressesById;
-    @OneToMany(mappedBy = "customerByCustomerId")
-    private Collection<Cart> cartsById;
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User userByUserId;
-    @OneToMany(mappedBy = "customerByCustomerId")
-    private Collection<Order> ordersById;
-    @OneToMany(mappedBy = "customerByCustomerId")
-    private Collection<PreferredPaymentSetting> preferredPaymentSettingsById;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    @OneToMany(mappedBy = "customer_id")
+    private Set<Address> addresses = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "customer_id")
+    private Set<Cart> carts = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "customer_id")
+    private Set<Order> orders = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "customer_id")
+    private Set<PreferredPaymentSetting> preferredPaymentSettings = new LinkedHashSet<>();
+
+    public Integer getCustomer_id() {
+        return customer_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCustomer_id(Integer customer_id) {
+        this.customer_id = customer_id;
     }
 
-    public int getUserId() {
-        return userId;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Customer customer = (Customer) o;
-        return id == customer.id && userId == customer.userId && Objects.equals(createdOn, customer.createdOn) && Objects.equals(updatedOn, customer.updatedOn);
+    public Set<Address> getAddresses() {
+        return addresses;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userId, createdOn, updatedOn);
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
     }
 
-    public Collection<Address> getAddressesById() {
-        return addressesById;
+    public Set<Cart> getCarts() {
+        return carts;
     }
 
-    public void setAddressesById(Collection<Address> addressesById) {
-        this.addressesById = addressesById;
+    public void setCarts(Set<Cart> carts) {
+        this.carts = carts;
     }
 
-    public Collection<Cart> getCartsById() {
-        return cartsById;
+    public Set<Order> getOrders() {
+        return orders;
     }
 
-    public void setCartsById(Collection<Cart> cartsById) {
-        this.cartsById = cartsById;
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
-    public User getUserByUserId() {
-        return userByUserId;
+    public Set<PreferredPaymentSetting> getPreferredPaymentSettings() {
+        return preferredPaymentSettings;
     }
 
-    public void setUserByUserId(User userByUserId) {
-        this.userByUserId = userByUserId;
+    public void setPreferredPaymentSettings(Set<PreferredPaymentSetting> preferredPaymentSettings) {
+        this.preferredPaymentSettings = preferredPaymentSettings;
     }
 
-    public Collection<Order> getOrdersById() {
-        return ordersById;
-    }
-
-    public void setOrdersById(Collection<Order> ordersById) {
-        this.ordersById = ordersById;
-    }
-
-    public Collection<PreferredPaymentSetting> getPreferredPaymentSettingsById() {
-        return preferredPaymentSettingsById;
-    }
-
-    public void setPreferredPaymentSettingsById(Collection<PreferredPaymentSetting> preferredPaymentSettingsById) {
-        this.preferredPaymentSettingsById = preferredPaymentSettingsById;
-    }
 }

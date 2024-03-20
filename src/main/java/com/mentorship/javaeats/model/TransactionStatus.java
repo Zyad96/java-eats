@@ -1,42 +1,38 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "transaction_status", schema = "public", catalog = "javaeat_lites")
-public class TransactionStatus {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "transaction_status")
+public class TransactionStatus implements Serializable {
+    private static final long serialVersionUID = 1254762601757586750L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
-    @Column(name = "name", nullable = false, length = 255)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "transaction_status_id", nullable = false)
+    private Integer transaction_status_id;
+
+    @Column(name = "name", nullable = false)
     private String name;
-    @Basic
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @OneToMany(mappedBy = "transactionStatusByTransactionStatusId")
-    private Collection<Transaction> transactionsById;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    @OneToMany(mappedBy = "transaction_status_id")
+    private Set<Transaction> transactions = new LinkedHashSet<>();
+
+    public Integer getTransaction_status_id() {
+        return transaction_status_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTransaction_status_id(Integer transaction_status_id) {
+        this.transaction_status_id = transaction_status_id;
     }
 
     public String getName() {
@@ -47,40 +43,28 @@ public class TransactionStatus {
         this.name = name;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TransactionStatus that = (TransactionStatus) o;
-        return id == that.id && Objects.equals(name, that.name) && Objects.equals(createdOn, that.createdOn) && Objects.equals(updatedOn, that.updatedOn);
+    public Set<Transaction> getTransactions() {
+        return transactions;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, createdOn, updatedOn);
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
-    public Collection<Transaction> getTransactionsById() {
-        return transactionsById;
-    }
-
-    public void setTransactionsById(Collection<Transaction> transactionsById) {
-        this.transactionsById = transactionsById;
-    }
 }

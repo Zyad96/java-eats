@@ -1,46 +1,44 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-public class Restaurant {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "restaurant")
+public class Restaurant implements Serializable {
+    private static final long serialVersionUID = -8307263283547156031L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
-    @Column(name = "name", nullable = false, length = 255)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "restaurant_id", nullable = false)
+    private Integer restaurant_id;
+
+    @Column(name = "name", nullable = false)
     private String name;
-    @Basic
-    @Column(name = "status", nullable = false, length = 255)
+
+    @Column(name = "status", nullable = false)
     private String status;
-    @Basic
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
-    private Collection<Menu> menusById;
-    @OneToMany(mappedBy = "restaurantByRestaurantId")
-    private Collection<RestaurantDetails> restaurantDetailsById;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    @OneToMany(mappedBy = "restaurant_id")
+    private Set<Menu> menus = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "restaurant_id")
+    private Set<RestaurantDetail> restaurantDetails = new LinkedHashSet<>();
+
+    public Integer getRestaurant_id() {
+        return restaurant_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setRestaurant_id(Integer restaurant_id) {
+        this.restaurant_id = restaurant_id;
     }
 
     public String getName() {
@@ -59,48 +57,36 @@ public class Restaurant {
         this.status = status;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Restaurant that = (Restaurant) o;
-        return id == that.id && Objects.equals(name, that.name) && Objects.equals(status, that.status) && Objects.equals(createdOn, that.createdOn) && Objects.equals(updatedOn, that.updatedOn);
+    public Set<Menu> getMenus() {
+        return menus;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, status, createdOn, updatedOn);
+    public void setMenus(Set<Menu> menus) {
+        this.menus = menus;
     }
 
-    public Collection<Menu> getMenusById() {
-        return menusById;
+    public Set<RestaurantDetail> getRestaurantDetails() {
+        return restaurantDetails;
     }
 
-    public void setMenusById(Collection<Menu> menusById) {
-        this.menusById = menusById;
+    public void setRestaurantDetails(Set<RestaurantDetail> restaurantDetails) {
+        this.restaurantDetails = restaurantDetails;
     }
 
-    public Collection<RestaurantDetails> getRestaurantDetailsById() {
-        return restaurantDetailsById;
-    }
-
-    public void setRestaurantDetailsById(Collection<RestaurantDetails> restaurantDetailsById) {
-        this.restaurantDetailsById = restaurantDetailsById;
-    }
 }

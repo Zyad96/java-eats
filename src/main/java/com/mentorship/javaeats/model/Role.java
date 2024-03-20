@@ -1,41 +1,38 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-public class Role {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "role")
+public class Role implements Serializable {
+    private static final long serialVersionUID = -6939625005545070489L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
-    @Column(name = "name", nullable = false, length = 255)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id", nullable = false)
+    private Integer role_id;
+
+    @Column(name = "name", nullable = false)
     private String name;
-    @Basic
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @OneToMany(mappedBy = "roleByRoleId")
-    private Collection<UserRole> userRolesById;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    @OneToMany(mappedBy = "role_id")
+    private Set<UserRole> userRoles = new LinkedHashSet<>();
+
+    public Integer getRole_id() {
+        return role_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setRole_id(Integer role_id) {
+        this.role_id = role_id;
     }
 
     public String getName() {
@@ -46,40 +43,28 @@ public class Role {
         this.name = name;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return id == role.id && Objects.equals(name, role.name) && Objects.equals(createdOn, role.createdOn) && Objects.equals(updatedOn, role.updatedOn);
+    public Set<UserRole> getUserRoles() {
+        return userRoles;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, createdOn, updatedOn);
+    public void setUserRoles(Set<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 
-    public Collection<UserRole> getUserRolesById() {
-        return userRolesById;
-    }
-
-    public void setUserRolesById(Collection<UserRole> userRolesById) {
-        this.userRolesById = userRolesById;
-    }
 }

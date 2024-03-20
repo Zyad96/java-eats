@@ -1,8 +1,7 @@
-package com.mentorproject1.repository;
+package com.mentorship.javaeats.repository;
 
-import com.mentorproject1.entity.OrderTracking;
+import com.mentorship.javaeats.model.OrderTracking;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface OrderTrackingRepository extends JpaRepository<OrderTracking, Integer>, JpaSpecificationExecutor<OrderTracking> {
+public interface OrderTrackingRepository extends JpaRepository<OrderTracking, Integer> {
 }

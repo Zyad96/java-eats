@@ -1,42 +1,38 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "user_type", schema = "public", catalog = "javaeat_lites")
-public class UserType {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "user_type")
+public class UserType implements Serializable {
+    private static final long serialVersionUID = 4615377170527086966L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
-    @Column(name = "name", nullable = false, length = 255)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_type_id", nullable = false)
+    private Integer user_type_id;
+
+    @Column(name = "name", nullable = false)
     private String name;
-    @Basic
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @OneToMany(mappedBy = "userTypeByUserTypeId")
-    private Collection<User> usersById;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    @OneToMany(mappedBy = "user_type_id")
+    private Set<User> users = new LinkedHashSet<>();
+
+    public Integer getUser_type_id() {
+        return user_type_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUser_type_id(Integer user_type_id) {
+        this.user_type_id = user_type_id;
     }
 
     public String getName() {
@@ -47,40 +43,28 @@ public class UserType {
         this.name = name;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserType userType = (UserType) o;
-        return id == userType.id && Objects.equals(name, userType.name) && Objects.equals(createdOn, userType.createdOn) && Objects.equals(updatedOn, userType.updatedOn);
+    public Set<User> getUsers() {
+        return users;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, createdOn, updatedOn);
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
-    public Collection<User> getUsersById() {
-        return usersById;
-    }
-
-    public void setUsersById(Collection<User> usersById) {
-        this.usersById = usersById;
-    }
 }

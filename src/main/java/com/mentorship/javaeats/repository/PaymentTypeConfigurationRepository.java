@@ -1,8 +1,7 @@
-package com.mentorproject1.repository;
+package com.mentorship.javaeats.repository;
 
-import com.mentorproject1.entity.PaymentTypeConfiguration;
+import com.mentorship.javaeats.model.PaymentTypeConfiguration;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface PaymentTypeConfigurationRepository extends JpaRepository<PaymentTypeConfiguration, Integer>, JpaSpecificationExecutor<PaymentTypeConfiguration> {
+public interface PaymentTypeConfigurationRepository extends JpaRepository<PaymentTypeConfiguration, Integer> {
 }

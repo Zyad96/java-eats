@@ -1,131 +1,91 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.Instant;
 
 @Entity
-@Table(name = "cart_item", schema = "public", catalog = "javaeat_lites")
-public class CartItem {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "cart_item")
+public class CartItem implements Serializable {
+    private static final long serialVersionUID = 7760796674048817633L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart_item_id", nullable = false)
+    private Integer cart_item_id;
+
     @Column(name = "cart_id", nullable = false)
-    private int cartId;
-    @Basic
+    private Integer cart_id;
+
     @Column(name = "menu_item_id", nullable = false)
-    private int menuItemId;
-    @Basic
+    private Integer menu_item_id;
+
     @Column(name = "quantity", nullable = false)
-    private int quantity;
-    @Basic
-    @Column(name = "price", nullable = false, precision = 0)
-    private BigInteger price;
-    @Basic
+    private Integer quantity;
+
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @ManyToOne
-    @JoinColumn(name = "cart_id", referencedColumnName = "id", nullable = false)
-    private Cart cartByCartId;
-    @ManyToOne
-    @JoinColumn(name = "menu_item_id", referencedColumnName = "id", nullable = false)
-    private MenuItem menuItemByMenuItemId;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    public Integer getCart_item_id() {
+        return cart_item_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCart_item_id(Integer cart_item_id) {
+        this.cart_item_id = cart_item_id;
     }
 
-    public int getCartId() {
-        return cartId;
+    public Integer getCart_id() {
+        return cart_id;
     }
 
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
+    public void setCart_id(Integer cart_id) {
+        this.cart_id = cart_id;
     }
 
-    public int getMenuItemId() {
-        return menuItemId;
+    public Integer getMenu_item_id() {
+        return menu_item_id;
     }
 
-    public void setMenuItemId(int menuItemId) {
-        this.menuItemId = menuItemId;
+    public void setMenu_item_id(Integer menu_item_id) {
+        this.menu_item_id = menu_item_id;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public BigInteger getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigInteger price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CartItem cartItem = (CartItem) o;
-        return id == cartItem.id && cartId == cartItem.cartId && menuItemId == cartItem.menuItemId && quantity == cartItem.quantity && Objects.equals(price, cartItem.price) && Objects.equals(createdOn, cartItem.createdOn) && Objects.equals(updatedOn, cartItem.updatedOn);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, cartId, menuItemId, quantity, price, createdOn, updatedOn);
-    }
-
-    public Cart getCartByCartId() {
-        return cartByCartId;
-    }
-
-    public void setCartByCartId(Cart cartByCartId) {
-        this.cartByCartId = cartByCartId;
-    }
-
-    public MenuItem getMenuItemByMenuItemId() {
-        return menuItemByMenuItemId;
-    }
-
-    public void setMenuItemByMenuItemId(MenuItem menuItemByMenuItemId) {
-        this.menuItemByMenuItemId = menuItemByMenuItemId;
-    }
 }

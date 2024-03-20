@@ -1,51 +1,41 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
 
 @Entity
-public class Auditing {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "auditing")
+public class Auditing implements Serializable {
+    private static final long serialVersionUID = 7295089491328365936L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "auditing_id", nullable = false)
+    private Integer auditing_id;
+
     @Column(name = "user_id", nullable = false)
-    private int userId;
-    @Basic
-    @Column(name = "action", nullable = false, length = 255)
+    private Integer user_id;
+
+    @Column(name = "action", nullable = false)
     private String action;
-    @Basic
-    @Column(name = "details", nullable = false)
-    private Object details;
-    @Basic
-    @Column(name = "timestamp", nullable = true)
-    private Timestamp timestamp;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.timestamp = now;
-    }
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User userByUserId;
 
-    public int getId() {
-        return id;
+    @Column(name = "\"timestamp\"")
+    private Instant timestamp;
+
+    public Integer getAuditing_id() {
+        return auditing_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAuditing_id(Integer auditing_id) {
+        this.auditing_id = auditing_id;
     }
 
-    public int getUserId() {
-        return userId;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public String getAction() {
@@ -56,40 +46,18 @@ public class Auditing {
         this.action = action;
     }
 
-    public Object getDetails() {
-        return details;
-    }
-
-    public void setDetails(Object details) {
-        this.details = details;
-    }
-
-    public Timestamp getTimestamp() {
+    public Instant getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Instant timestamp) {
         this.timestamp = timestamp;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Auditing auditing = (Auditing) o;
-        return id == auditing.id && userId == auditing.userId && Objects.equals(action, auditing.action) && Objects.equals(details, auditing.details) && Objects.equals(timestamp, auditing.timestamp);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userId, action, details, timestamp);
-    }
-
-    public User getUserByUserId() {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(User userByUserId) {
-        this.userByUserId = userByUserId;
-    }
+/*
+ TODO [JPA Buddy] create field to map the 'details' column
+ Available actions: Define target Java type | Uncomment as is | Remove column mapping
+    @Column(name = "details", columnDefinition = "jsonb(0, 0) not null")
+    private Object details;
+*/
 }

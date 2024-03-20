@@ -1,130 +1,93 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-public class Transaction {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "transaction")
+public class Transaction implements Serializable {
+    private static final long serialVersionUID = 6316379937204703865L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "transaction_id", nullable = false)
+    private Integer transaction_id;
+
     @Column(name = "order_id", nullable = false)
-    private int orderId;
-    @Basic
-    @Column(name = "amount", nullable = false, precision = 0)
-    private BigInteger amount;
-    @Basic
+    private Integer order_id;
+
+    @Column(name = "amount", nullable = false)
+    private BigDecimal amount;
+
     @Column(name = "transaction_status_id", nullable = false)
-    private int transactionStatusId;
-    @Basic
+    private Integer transaction_status_id;
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
-    private Order orderByOrderId;
-    @ManyToOne
-    @JoinColumn(name = "transaction_status_id", referencedColumnName = "id", nullable = false)
-    private TransactionStatus transactionStatusByTransactionStatusId;
-    @OneToMany(mappedBy = "transactionByTransactionId")
-    private Collection<TransactionDetails> transactionDetailsById;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    @OneToMany(mappedBy = "transaction_id")
+    private Set<TransactionDetail> transactionDetails = new LinkedHashSet<>();
+
+    public Integer getTransaction_id() {
+        return transaction_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTransaction_id(Integer transaction_id) {
+        this.transaction_id = transaction_id;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public Integer getOrder_id() {
+        return order_id;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setOrder_id(Integer order_id) {
+        this.order_id = order_id;
     }
 
-    public BigInteger getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(BigInteger amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public int getTransactionStatusId() {
-        return transactionStatusId;
+    public Integer getTransaction_status_id() {
+        return transaction_status_id;
     }
 
-    public void setTransactionStatusId(int transactionStatusId) {
-        this.transactionStatusId = transactionStatusId;
+    public void setTransaction_status_id(Integer transaction_status_id) {
+        this.transaction_status_id = transaction_status_id;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Transaction that = (Transaction) o;
-        return id == that.id && orderId == that.orderId && transactionStatusId == that.transactionStatusId && Objects.equals(amount, that.amount) && Objects.equals(createdOn, that.createdOn) && Objects.equals(updatedOn, that.updatedOn);
+    public Set<TransactionDetail> getTransactionDetails() {
+        return transactionDetails;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, orderId, amount, transactionStatusId, createdOn, updatedOn);
+    public void setTransactionDetails(Set<TransactionDetail> transactionDetails) {
+        this.transactionDetails = transactionDetails;
     }
 
-    public Order getOrderByOrderId() {
-        return orderByOrderId;
-    }
-
-    public void setOrderByOrderId(Order orderByOrderId) {
-        this.orderByOrderId = orderByOrderId;
-    }
-
-    public TransactionStatus getTransactionStatusByTransactionStatusId() {
-        return transactionStatusByTransactionStatusId;
-    }
-
-    public void setTransactionStatusByTransactionStatusId(TransactionStatus transactionStatusByTransactionStatusId) {
-        this.transactionStatusByTransactionStatusId = transactionStatusByTransactionStatusId;
-    }
-
-    public Collection<TransactionDetails> getTransactionDetailsById() {
-        return transactionDetailsById;
-    }
-
-    public void setTransactionDetailsById(Collection<TransactionDetails> transactionDetailsById) {
-        this.transactionDetailsById = transactionDetailsById;
-    }
 }

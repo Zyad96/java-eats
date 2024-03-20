@@ -1,108 +1,68 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
 
 @Entity
-@Table(name = "user_role", schema = "public", catalog = "javaeat_lites")
-public class UserRole {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "user_role")
+public class UserRole implements Serializable {
+    private static final long serialVersionUID = -1096213343519386848L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_role_id", nullable = false)
+    private Integer user_role_id;
+
     @Column(name = "user_id", nullable = false)
-    private int userId;
-    @Basic
+    private Integer user_id;
+
     @Column(name = "role_id", nullable = false)
-    private int roleId;
-    @Basic
+    private Integer role_id;
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User userByUserId;
-    @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
-    private Role roleByRoleId;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    public Integer getUser_role_id() {
+        return user_role_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUser_role_id(Integer user_role_id) {
+        this.user_role_id = user_role_id;
     }
 
-    public int getUserId() {
-        return userId;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public Integer getRole_id() {
+        return role_id;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRole_id(Integer role_id) {
+        this.role_id = role_id;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserRole userRole = (UserRole) o;
-        return id == userRole.id && userId == userRole.userId && roleId == userRole.roleId && Objects.equals(createdOn, userRole.createdOn) && Objects.equals(updatedOn, userRole.updatedOn);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userId, roleId, createdOn, updatedOn);
-    }
-
-    public User getUserByUserId() {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(User userByUserId) {
-        this.userByUserId = userByUserId;
-    }
-
-    public Role getRoleByRoleId() {
-        return roleByRoleId;
-    }
-
-    public void setRoleByRoleId(Role roleByRoleId) {
-        this.roleByRoleId = roleByRoleId;
-    }
 }

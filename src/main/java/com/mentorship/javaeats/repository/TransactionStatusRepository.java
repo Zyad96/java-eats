@@ -1,8 +1,7 @@
-package com.mentorproject1.repository;
+package com.mentorship.javaeats.repository;
 
-import com.mentorproject1.entity.TransactionStatus;
+import com.mentorship.javaeats.model.TransactionStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface TransactionStatusRepository extends JpaRepository<TransactionStatus, Integer>, JpaSpecificationExecutor<TransactionStatus> {
+public interface TransactionStatusRepository extends JpaRepository<TransactionStatus, Integer> {
 }

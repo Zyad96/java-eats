@@ -1,70 +1,65 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "menu_item", schema = "public", catalog = "javaeat_lites")
-public class MenuItem {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "menu_item")
+public class MenuItem implements Serializable {
+    private static final long serialVersionUID = -6693068862351378435L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "menu_item_id", nullable = false)
+    private Integer menu_item_id;
+
     @Column(name = "menu_id", nullable = false)
-    private int menuId;
-    @Basic
-    @Column(name = "name", nullable = false, length = 255)
+    private Integer menu_id;
+
+    @Column(name = "name", nullable = false)
     private String name;
-    @Basic
-    @Column(name = "description", nullable = true, length = -1)
+
+    @Column(name = "description")
     private String description;
-    @Basic
-    @Column(name = "price", nullable = false, precision = 0)
-    private BigInteger price;
-    @Basic
-    @Column(name = "status", nullable = false, length = 255)
+
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
+
+    @Column(name = "status", nullable = false)
     private String status;
-    @Basic
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @OneToMany(mappedBy = "menuItemByMenuItemId")
-    private Collection<CartItem> cartItemsById;
-    @ManyToOne
-    @JoinColumn(name = "menu_id", referencedColumnName = "id", nullable = false)
-    private Menu menuByMenuId;
-    @OneToMany(mappedBy = "menuItemByMenuItemId")
-    private Collection<MenuItemIngredient> menuItemIngredientsById;
-    @OneToMany(mappedBy = "menuItemByMenuItemId")
-    private Collection<OrderItem> orderItemsById;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    @OneToMany(mappedBy = "menu_item_id")
+    private Set<CartItem> cartItems = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "menu_item_id")
+    private Set<MenuItemIngredient> menuItemIngredients = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "menu_item_id")
+    private Set<OrderItem> orderItems = new LinkedHashSet<>();
+
+    public Integer getMenu_item_id() {
+        return menu_item_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMenu_item_id(Integer menu_item_id) {
+        this.menu_item_id = menu_item_id;
     }
 
-    public int getMenuId() {
-        return menuId;
+    public Integer getMenu_id() {
+        return menu_id;
     }
 
-    public void setMenuId(int menuId) {
-        this.menuId = menuId;
+    public void setMenu_id(Integer menu_id) {
+        this.menu_id = menu_id;
     }
 
     public String getName() {
@@ -83,11 +78,11 @@ public class MenuItem {
         this.description = description;
     }
 
-    public BigInteger getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigInteger price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -99,64 +94,44 @@ public class MenuItem {
         this.status = status;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MenuItem menuItem = (MenuItem) o;
-        return id == menuItem.id && menuId == menuItem.menuId && Objects.equals(name, menuItem.name) && Objects.equals(description, menuItem.description) && Objects.equals(price, menuItem.price) && Objects.equals(status, menuItem.status) && Objects.equals(createdOn, menuItem.createdOn) && Objects.equals(updatedOn, menuItem.updatedOn);
+    public Set<CartItem> getCartItems() {
+        return cartItems;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, menuId, name, description, price, status, createdOn, updatedOn);
+    public void setCartItems(Set<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 
-    public Collection<CartItem> getCartItemsById() {
-        return cartItemsById;
+    public Set<MenuItemIngredient> getMenuItemIngredients() {
+        return menuItemIngredients;
     }
 
-    public void setCartItemsById(Collection<CartItem> cartItemsById) {
-        this.cartItemsById = cartItemsById;
+    public void setMenuItemIngredients(Set<MenuItemIngredient> menuItemIngredients) {
+        this.menuItemIngredients = menuItemIngredients;
     }
 
-    public Menu getMenuByMenuId() {
-        return menuByMenuId;
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setMenuByMenuId(Menu menuByMenuId) {
-        this.menuByMenuId = menuByMenuId;
+    public void setOrderItems(Set<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
-    public Collection<MenuItemIngredient> getMenuItemIngredientsById() {
-        return menuItemIngredientsById;
-    }
-
-    public void setMenuItemIngredientsById(Collection<MenuItemIngredient> menuItemIngredientsById) {
-        this.menuItemIngredientsById = menuItemIngredientsById;
-    }
-
-    public Collection<OrderItem> getOrderItemsById() {
-        return orderItemsById;
-    }
-
-    public void setOrderItemsById(Collection<OrderItem> orderItemsById) {
-        this.orderItemsById = orderItemsById;
-    }
 }

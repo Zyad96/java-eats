@@ -1,108 +1,68 @@
-package com.mentorproject1.entity;
+package com.mentorship.javaeats.model;
 
-import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Objects;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.Instant;
 
 @Entity
-@Table(name = "menu_item_ingredient", schema = "public", catalog = "javaeat_lites")
-public class MenuItemIngredient {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "menu_item_ingredient")
+public class MenuItemIngredient implements Serializable {
+    private static final long serialVersionUID = -438203614380434834L;
     @Id
-    @Column(name = "id", nullable = false)
-    private int id;
-    @Basic
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "menu_item_ingredient_id", nullable = false)
+    private Integer menu_item_ingredient_id;
+
     @Column(name = "menu_item_id", nullable = false)
-    private int menuItemId;
-    @Basic
+    private Integer menu_item_id;
+
     @Column(name = "ingredient_id", nullable = false)
-    private int ingredientId;
-    @Basic
+    private Integer ingredient_id;
+
     @Column(name = "created_on", nullable = false)
-    private Timestamp createdOn;
-    @Basic
+    private Instant created_on;
+
     @Column(name = "updated_on", nullable = false)
-    private Timestamp updatedOn;
-    @PrePersist
-    public void prePersist() {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        this.createdOn = now;
-        this.updatedOn = now;
-    }
-    @ManyToOne
-    @JoinColumn(name = "menu_item_id", referencedColumnName = "id", nullable = false)
-    private MenuItem menuItemByMenuItemId;
-    @ManyToOne
-    @JoinColumn(name = "ingredient_id", referencedColumnName = "id", nullable = false)
-    private Ingredient ingredientByIngredientId;
+    private Instant updated_on;
 
-    public int getId() {
-        return id;
+    public Integer getMenu_item_ingredient_id() {
+        return menu_item_ingredient_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMenu_item_ingredient_id(Integer menu_item_ingredient_id) {
+        this.menu_item_ingredient_id = menu_item_ingredient_id;
     }
 
-    public int getMenuItemId() {
-        return menuItemId;
+    public Integer getMenu_item_id() {
+        return menu_item_id;
     }
 
-    public void setMenuItemId(int menuItemId) {
-        this.menuItemId = menuItemId;
+    public void setMenu_item_id(Integer menu_item_id) {
+        this.menu_item_id = menu_item_id;
     }
 
-    public int getIngredientId() {
-        return ingredientId;
+    public Integer getIngredient_id() {
+        return ingredient_id;
     }
 
-    public void setIngredientId(int ingredientId) {
-        this.ingredientId = ingredientId;
+    public void setIngredient_id(Integer ingredient_id) {
+        this.ingredient_id = ingredient_id;
     }
 
-    public Timestamp getCreatedOn() {
-        return createdOn;
+    public Instant getCreated_on() {
+        return created_on;
     }
 
-    public void setCreatedOn(Timestamp createdOn) {
-        this.createdOn = createdOn;
+    public void setCreated_on(Instant created_on) {
+        this.created_on = created_on;
     }
 
-    public Timestamp getUpdatedOn() {
-        return updatedOn;
+    public Instant getUpdated_on() {
+        return updated_on;
     }
 
-    public void setUpdatedOn(Timestamp updatedOn) {
-        this.updatedOn = updatedOn;
+    public void setUpdated_on(Instant updated_on) {
+        this.updated_on = updated_on;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MenuItemIngredient that = (MenuItemIngredient) o;
-        return id == that.id && menuItemId == that.menuItemId && ingredientId == that.ingredientId && Objects.equals(createdOn, that.createdOn) && Objects.equals(updatedOn, that.updatedOn);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, menuItemId, ingredientId, createdOn, updatedOn);
-    }
-
-    public MenuItem getMenuItemByMenuItemId() {
-        return menuItemByMenuItemId;
-    }
-
-    public void setMenuItemByMenuItemId(MenuItem menuItemByMenuItemId) {
-        this.menuItemByMenuItemId = menuItemByMenuItemId;
-    }
-
-    public Ingredient getIngredientByIngredientId() {
-        return ingredientByIngredientId;
-    }
-
-    public void setIngredientByIngredientId(Ingredient ingredientByIngredientId) {
-        this.ingredientByIngredientId = ingredientByIngredientId;
-    }
 }
