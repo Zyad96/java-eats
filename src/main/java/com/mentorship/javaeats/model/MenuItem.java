@@ -8,16 +8,16 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "menu_item")
+@Table(name = "menu_item", schema = "javaeat_lites")
 public class MenuItem implements Serializable {
     private static final long serialVersionUID = -6693068862351378435L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "menu_item_id", nullable = false)
-    private Integer menu_item_id;
+    private Integer id;
 
     @Column(name = "menu_id", nullable = false)
-    private Integer menu_id;
+    private Integer menuId;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -32,34 +32,34 @@ public class MenuItem implements Serializable {
     private String status;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    @OneToMany(mappedBy = "menu_item_id")
+    @OneToMany(mappedBy = "menuItemId")
     private Set<CartItem> cartItems = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "menu_item_id")
+    @OneToMany(mappedBy = "menuItemId")
     private Set<MenuItemIngredient> menuItemIngredients = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "menu_item_id")
+    @OneToMany(mappedBy = "menuItemId")
     private Set<OrderItem> orderItems = new LinkedHashSet<>();
 
-    public Integer getMenu_item_id() {
-        return menu_item_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setMenu_item_id(Integer menu_item_id) {
-        this.menu_item_id = menu_item_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getMenu_id() {
-        return menu_id;
+    public Integer getMenuId() {
+        return menuId;
     }
 
-    public void setMenu_id(Integer menu_id) {
-        this.menu_id = menu_id;
+    public void setMenuId(Integer menuId) {
+        this.menuId = menuId;
     }
 
     public String getName() {
@@ -94,20 +94,20 @@ public class MenuItem implements Serializable {
         this.status = status;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
     public Set<CartItem> getCartItems() {

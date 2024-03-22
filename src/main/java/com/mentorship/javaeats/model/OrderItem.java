@@ -6,19 +6,19 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-@Table(name = "order_item")
+@Table(name = "order_item", schema = "javaeat_lites")
 public class OrderItem implements Serializable {
     private static final long serialVersionUID = -2430065943374712760L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id", nullable = false)
-    private Integer order_item_id;
+    private Integer id;
 
     @Column(name = "order_id", nullable = false)
-    private Integer order_id;
+    private Integer orderId;
 
     @Column(name = "menu_item_id", nullable = false)
-    private Integer menu_item_id;
+    private Integer menuItemId;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
@@ -30,33 +30,33 @@ public class OrderItem implements Serializable {
     private String status;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    public Integer getOrder_item_id() {
-        return order_item_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setOrder_item_id(Integer order_item_id) {
-        this.order_item_id = order_item_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getOrder_id() {
-        return order_id;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setOrder_id(Integer order_id) {
-        this.order_id = order_id;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
-    public Integer getMenu_item_id() {
-        return menu_item_id;
+    public Integer getMenuItemId() {
+        return menuItemId;
     }
 
-    public void setMenu_item_id(Integer menu_item_id) {
-        this.menu_item_id = menu_item_id;
+    public void setMenuItemId(Integer menuItemId) {
+        this.menuItemId = menuItemId;
     }
 
     public Integer getQuantity() {
@@ -83,20 +83,20 @@ public class OrderItem implements Serializable {
         this.status = status;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
 }

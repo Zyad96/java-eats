@@ -20,6 +20,11 @@ public class CartController {
         this.cartService = cartService;
     }
 
+    @GetMapping("/{cartId}/items")
+    public Collection<CartItem> getCartItems(@PathVariable int cartId) {
+        return cartService.getCartItems(cartId);
+    }
+
     @PutMapping("/{cartId}/items/update-quantity")
     public CartItem updateItemQuantity(@PathVariable int cartId, @RequestBody CartItem cartItem) {
         return cartService.updateCartItem(cartId, cartItem);

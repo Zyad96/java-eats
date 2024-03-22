@@ -5,64 +5,64 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @Entity
-@Table(name = "menu_item_ingredient")
+@Table(name = "menu_item_ingredient", schema = "javaeat_lites")
 public class MenuItemIngredient implements Serializable {
     private static final long serialVersionUID = -438203614380434834L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "menu_item_ingredient_id", nullable = false)
-    private Integer menu_item_ingredient_id;
+    private Integer id;
 
     @Column(name = "menu_item_id", nullable = false)
-    private Integer menu_item_id;
+    private Integer menuItemId;
 
     @Column(name = "ingredient_id", nullable = false)
-    private Integer ingredient_id;
+    private Integer ingredientId;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    public Integer getMenu_item_ingredient_id() {
-        return menu_item_ingredient_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setMenu_item_ingredient_id(Integer menu_item_ingredient_id) {
-        this.menu_item_ingredient_id = menu_item_ingredient_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getMenu_item_id() {
-        return menu_item_id;
+    public Integer getMenuItemId() {
+        return menuItemId;
     }
 
-    public void setMenu_item_id(Integer menu_item_id) {
-        this.menu_item_id = menu_item_id;
+    public void setMenuItemId(Integer menuItemId) {
+        this.menuItemId = menuItemId;
     }
 
-    public Integer getIngredient_id() {
-        return ingredient_id;
+    public Integer getIngredientId() {
+        return ingredientId;
     }
 
-    public void setIngredient_id(Integer ingredient_id) {
-        this.ingredient_id = ingredient_id;
+    public void setIngredientId(Integer ingredientId) {
+        this.ingredientId = ingredientId;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
 }

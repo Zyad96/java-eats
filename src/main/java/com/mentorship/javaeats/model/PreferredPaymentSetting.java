@@ -5,64 +5,64 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @Entity
-@Table(name = "preferred_payment_setting")
+@Table(name = "preferred_payment_setting", schema = "javaeat_lites")
 public class PreferredPaymentSetting implements Serializable {
     private static final long serialVersionUID = -6478348039126767157L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "preferred_payment_setting_id", nullable = false)
-    private Integer preferred_payment_setting_id;
+    private Integer id;
 
     @Column(name = "customer_id", nullable = false)
-    private Integer customer_id;
+    private Integer customerId;
 
     @Column(name = "payment_type_config_id", nullable = false)
-    private Integer payment_type_config_id;
+    private Integer paymentTypeConfigId;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    public Integer getPreferred_payment_setting_id() {
-        return preferred_payment_setting_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPreferred_payment_setting_id(Integer preferred_payment_setting_id) {
-        this.preferred_payment_setting_id = preferred_payment_setting_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getCustomer_id() {
-        return customer_id;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer_id(Integer customer_id) {
-        this.customer_id = customer_id;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
-    public Integer getPayment_type_config_id() {
-        return payment_type_config_id;
+    public Integer getPaymentTypeConfigId() {
+        return paymentTypeConfigId;
     }
 
-    public void setPayment_type_config_id(Integer payment_type_config_id) {
-        this.payment_type_config_id = payment_type_config_id;
+    public void setPaymentTypeConfigId(Integer paymentTypeConfigId) {
+        this.paymentTypeConfigId = paymentTypeConfigId;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
 }

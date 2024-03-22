@@ -8,46 +8,46 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "transaction")
+@Table(name = "transaction", schema = "javaeat_lites")
 public class Transaction implements Serializable {
     private static final long serialVersionUID = 6316379937204703865L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id", nullable = false)
-    private Integer transaction_id;
+    private Integer id;
 
     @Column(name = "order_id", nullable = false)
-    private Integer order_id;
+    private Integer orderId;
 
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
     @Column(name = "transaction_status_id", nullable = false)
-    private Integer transaction_status_id;
+    private Integer transactionStatusId;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    @OneToMany(mappedBy = "transaction_id")
+    @OneToMany(mappedBy = "transactionId")
     private Set<TransactionDetail> transactionDetails = new LinkedHashSet<>();
 
-    public Integer getTransaction_id() {
-        return transaction_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTransaction_id(Integer transaction_id) {
-        this.transaction_id = transaction_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getOrder_id() {
-        return order_id;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setOrder_id(Integer order_id) {
-        this.order_id = order_id;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     public BigDecimal getAmount() {
@@ -58,28 +58,28 @@ public class Transaction implements Serializable {
         this.amount = amount;
     }
 
-    public Integer getTransaction_status_id() {
-        return transaction_status_id;
+    public Integer getTransactionStatusId() {
+        return transactionStatusId;
     }
 
-    public void setTransaction_status_id(Integer transaction_status_id) {
-        this.transaction_status_id = transaction_status_id;
+    public void setTransactionStatusId(Integer transactionStatusId) {
+        this.transactionStatusId = transactionStatusId;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
     public Set<TransactionDetail> getTransactionDetails() {

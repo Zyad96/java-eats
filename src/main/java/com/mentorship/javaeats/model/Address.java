@@ -5,22 +5,22 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @Entity
-@Table(name = "address")
+@Table(name = "address", schema = "javaeat_lites")
 public class Address implements Serializable {
-    private static final long serialVersionUID = -5419195998414018035L;
+    private static final long serialVersionUID = 5877626381862314210L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id", nullable = false)
-    private Integer address_id;
+    private Integer id;
 
     @Column(name = "customer_id", nullable = false)
-    private Integer customer_id;
+    private Integer customerId;
 
     @Column(name = "address_line1", nullable = false)
-    private String address_line1;
+    private String addressLine1;
 
     @Column(name = "address_line2")
-    private String address_line2;
+    private String addressLine2;
 
     @Column(name = "city", nullable = false)
     private String city;
@@ -32,42 +32,41 @@ public class Address implements Serializable {
     private String country;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-
-    public Integer getAddress_id() {
-        return address_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setAddress_id(Integer address_id) {
-        this.address_id = address_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getCustomer_id() {
-        return customer_id;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer_id(Integer customer_id) {
-        this.customer_id = customer_id;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
-    public String getAddress_line1() {
-        return address_line1;
+    public String getAddressLine1() {
+        return addressLine1;
     }
 
-    public void setAddress_line1(String address_line1) {
-        this.address_line1 = address_line1;
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
     }
 
-    public String getAddress_line2() {
-        return address_line2;
+    public String getAddressLine2() {
+        return addressLine2;
     }
 
-    public void setAddress_line2(String address_line2) {
-        this.address_line2 = address_line2;
+    public void setAddressLine2(String addressLine2) {
+        this.addressLine2 = addressLine2;
     }
 
     public String getCity() {
@@ -94,21 +93,20 @@ public class Address implements Serializable {
         this.country = country;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
-
 
 }

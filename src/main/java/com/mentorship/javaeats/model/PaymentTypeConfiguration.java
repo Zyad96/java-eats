@@ -7,67 +7,67 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "payment_type_configuration")
+@Table(name = "payment_type_configuration", schema = "javaeat_lites")
 public class PaymentTypeConfiguration implements Serializable {
     private static final long serialVersionUID = -4385468626596680933L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_type_configuration_id", nullable = false)
-    private Integer payment_type_configuration_id;
+    private Integer id;
 
     @Column(name = "payment_integration_type_id", nullable = false)
-    private Integer payment_integration_type_id;
+    private Integer paymentIntegrationTypeId;
 
     @Column(name = "configuration_details", nullable = false)
-    private String configuration_details;
+    private String configurationDetails;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    @OneToMany(mappedBy = "payment_type_config_id")
+    @OneToMany(mappedBy = "paymentTypeConfigId")
     private Set<PreferredPaymentSetting> preferredPaymentSettings = new LinkedHashSet<>();
 
-    public Integer getPayment_type_configuration_id() {
-        return payment_type_configuration_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPayment_type_configuration_id(Integer payment_type_configuration_id) {
-        this.payment_type_configuration_id = payment_type_configuration_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getPayment_integration_type_id() {
-        return payment_integration_type_id;
+    public Integer getPaymentIntegrationTypeId() {
+        return paymentIntegrationTypeId;
     }
 
-    public void setPayment_integration_type_id(Integer payment_integration_type_id) {
-        this.payment_integration_type_id = payment_integration_type_id;
+    public void setPaymentIntegrationTypeId(Integer paymentIntegrationTypeId) {
+        this.paymentIntegrationTypeId = paymentIntegrationTypeId;
     }
 
-    public String getConfiguration_details() {
-        return configuration_details;
+    public String getConfigurationDetails() {
+        return configurationDetails;
     }
 
-    public void setConfiguration_details(String configuration_details) {
-        this.configuration_details = configuration_details;
+    public void setConfigurationDetails(String configurationDetails) {
+        this.configurationDetails = configurationDetails;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
     public Set<PreferredPaymentSetting> getPreferredPaymentSettings() {

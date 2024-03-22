@@ -5,40 +5,40 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @Entity
-@Table(name = "transaction_details")
+@Table(name = "transaction_details", schema = "javaeat_lites")
 public class TransactionDetail implements Serializable {
     private static final long serialVersionUID = 6413867185386133420L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_details_id", nullable = false)
-    private Integer transaction_details_id;
+    private Integer id;
 
     @Column(name = "transaction_id", nullable = false)
-    private Integer transaction_id;
+    private Integer transactionId;
 
     @Column(name = "details", nullable = false)
     private String details;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    public Integer getTransaction_details_id() {
-        return transaction_details_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTransaction_details_id(Integer transaction_details_id) {
-        this.transaction_details_id = transaction_details_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getTransaction_id() {
-        return transaction_id;
+    public Integer getTransactionId() {
+        return transactionId;
     }
 
-    public void setTransaction_id(Integer transaction_id) {
-        this.transaction_id = transaction_id;
+    public void setTransactionId(Integer transactionId) {
+        this.transactionId = transactionId;
     }
 
     public String getDetails() {
@@ -49,20 +49,20 @@ public class TransactionDetail implements Serializable {
         this.details = details;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
 }

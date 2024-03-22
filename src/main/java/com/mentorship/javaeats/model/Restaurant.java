@@ -7,13 +7,13 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "restaurant")
+@Table(name = "restaurant", schema = "javaeat_lites")
 public class Restaurant implements Serializable {
     private static final long serialVersionUID = -8307263283547156031L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "restaurant_id", nullable = false)
-    private Integer restaurant_id;
+    private Integer id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -22,23 +22,23 @@ public class Restaurant implements Serializable {
     private String status;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    @OneToMany(mappedBy = "restaurant_id")
+    @OneToMany(mappedBy = "restaurantId")
     private Set<Menu> menus = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "restaurant_id")
+    @OneToMany(mappedBy = "restaurantId")
     private Set<RestaurantDetail> restaurantDetails = new LinkedHashSet<>();
 
-    public Integer getRestaurant_id() {
-        return restaurant_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setRestaurant_id(Integer restaurant_id) {
-        this.restaurant_id = restaurant_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -57,20 +57,20 @@ public class Restaurant implements Serializable {
         this.status = status;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
     public Set<Menu> getMenus() {

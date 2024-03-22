@@ -6,54 +6,57 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-@Table(name = "cart_item")
+@Table(name = "cart_item", schema = "javaeat_lites")
 public class CartItem implements Serializable {
-    private static final long serialVersionUID = 7760796674048817633L;
+    private static final long serialVersionUID = -8836255250946841875L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_item_id", nullable = false)
-    private Integer cart_item_id;
+    private Integer id;
 
     @Column(name = "cart_id", nullable = false)
-    private Integer cart_id;
+    private Integer cartId;
 
     @Column(name = "menu_item_id", nullable = false)
-    private Integer menu_item_id;
+    private Integer menuItemId;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
+    @Column(name = "unit_price", nullable = false)
+    private BigDecimal unitPrice;
+
+    @Column(name = "total_price", nullable = false)
+    private BigDecimal totalPrice;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    public Integer getCart_item_id() {
-        return cart_item_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCart_item_id(Integer cart_item_id) {
-        this.cart_item_id = cart_item_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getCart_id() {
-        return cart_id;
+    public Integer getCartId() {
+        return cartId;
     }
 
-    public void setCart_id(Integer cart_id) {
-        this.cart_id = cart_id;
+    public void setCartId(Integer cartId) {
+        this.cartId = cartId;
     }
 
-    public Integer getMenu_item_id() {
-        return menu_item_id;
+    public Integer getMenuItemId() {
+        return menuItemId;
     }
 
-    public void setMenu_item_id(Integer menu_item_id) {
-        this.menu_item_id = menu_item_id;
+    public void setMenuItemId(Integer menuItemId) {
+        this.menuItemId = menuItemId;
     }
 
     public Integer getQuantity() {
@@ -64,28 +67,36 @@ public class CartItem implements Serializable {
         this.quantity = quantity;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Instant getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
 }

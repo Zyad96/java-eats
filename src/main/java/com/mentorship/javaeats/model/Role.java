@@ -7,32 +7,32 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "role")
+@Table(name = "role", schema = "javaeat_lites")
 public class Role implements Serializable {
     private static final long serialVersionUID = -6939625005545070489L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id", nullable = false)
-    private Integer role_id;
+    private Integer id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    @OneToMany(mappedBy = "role_id")
+    @OneToMany(mappedBy = "roleId")
     private Set<UserRole> userRoles = new LinkedHashSet<>();
 
-    public Integer getRole_id() {
-        return role_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setRole_id(Integer role_id) {
-        this.role_id = role_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -43,20 +43,20 @@ public class Role implements Serializable {
         this.name = name;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
     public Set<UserRole> getUserRoles() {

@@ -30,7 +30,7 @@ public class CartServiceImpl implements CartService {
 
         Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("Cart not found"));
 
-        CartItem existingCartItem = cart.getCartItem(cartItem.getCart_item_id());
+        CartItem existingCartItem = cart.getCartItem(cartItem.getId());
 
         if (existingCartItem != null) {
 

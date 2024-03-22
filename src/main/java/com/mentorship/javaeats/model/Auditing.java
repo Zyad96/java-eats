@@ -5,16 +5,16 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @Entity
-@Table(name = "auditing")
+@Table(name = "auditing", schema = "javaeat_lites")
 public class Auditing implements Serializable {
     private static final long serialVersionUID = 7295089491328365936L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "auditing_id", nullable = false)
-    private Integer auditing_id;
+    private Integer id;
 
     @Column(name = "user_id", nullable = false)
-    private Integer user_id;
+    private Integer userId;
 
     @Column(name = "action", nullable = false)
     private String action;
@@ -22,20 +22,20 @@ public class Auditing implements Serializable {
     @Column(name = "\"timestamp\"")
     private Instant timestamp;
 
-    public Integer getAuditing_id() {
-        return auditing_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setAuditing_id(Integer auditing_id) {
-        this.auditing_id = auditing_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getAction() {

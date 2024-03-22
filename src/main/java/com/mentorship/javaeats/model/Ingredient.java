@@ -8,13 +8,13 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "ingredient")
+@Table(name = "ingredient", schema = "javaeat_lites")
 public class Ingredient implements Serializable {
     private static final long serialVersionUID = 1107477722230800809L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ingredient_id", nullable = false)
-    private Integer ingredient_id;
+    private Integer id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -32,26 +32,26 @@ public class Ingredient implements Serializable {
     private BigDecimal cost;
 
     @Column(name = "stock_quantity", nullable = false)
-    private Integer stock_quantity;
+    private Integer stockQuantity;
 
     @Column(name = "storage_instructions")
-    private String storage_instructions;
+    private String storageInstructions;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    @OneToMany(mappedBy = "ingredient_id")
+    @OneToMany(mappedBy = "ingredientId")
     private Set<MenuItemIngredient> menuItemIngredients = new LinkedHashSet<>();
 
-    public Integer getIngredient_id() {
-        return ingredient_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIngredient_id(Integer ingredient_id) {
-        this.ingredient_id = ingredient_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -94,36 +94,36 @@ public class Ingredient implements Serializable {
         this.cost = cost;
     }
 
-    public Integer getStock_quantity() {
-        return stock_quantity;
+    public Integer getStockQuantity() {
+        return stockQuantity;
     }
 
-    public void setStock_quantity(Integer stock_quantity) {
-        this.stock_quantity = stock_quantity;
+    public void setStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
-    public String getStorage_instructions() {
-        return storage_instructions;
+    public String getStorageInstructions() {
+        return storageInstructions;
     }
 
-    public void setStorage_instructions(String storage_instructions) {
-        this.storage_instructions = storage_instructions;
+    public void setStorageInstructions(String storageInstructions) {
+        this.storageInstructions = storageInstructions;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
     public Set<MenuItemIngredient> getMenuItemIngredients() {

@@ -8,19 +8,19 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "\"order\"")
+@Table(name = "\"order\"", schema = "javaeat_lites")
 public class Order implements Serializable {
     private static final long serialVersionUID = 5237255932579833792L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id", nullable = false)
-    private Integer order_id;
+    private Integer id;
 
     @Column(name = "customer_id", nullable = false)
-    private Integer customer_id;
+    private Integer customerId;
 
     @Column(name = "order_date", nullable = false)
-    private Instant order_date;
+    private Instant orderDate;
 
     @Column(name = "subtotal", nullable = false)
     private BigDecimal subtotal;
@@ -32,45 +32,45 @@ public class Order implements Serializable {
     private BigDecimal total;
 
     @Column(name = "order_status_id", nullable = false)
-    private Integer order_status_id;
+    private Integer orderStatusId;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    @OneToMany(mappedBy = "order_id")
+    @OneToMany(mappedBy = "orderId")
     private Set<OrderItem> orderItems = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "order_id")
+    @OneToMany(mappedBy = "orderId")
     private Set<OrderTracking> orderTrackings = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "order_id")
+    @OneToMany(mappedBy = "orderId")
     private Set<Transaction> transactions = new LinkedHashSet<>();
 
-    public Integer getOrder_id() {
-        return order_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setOrder_id(Integer order_id) {
-        this.order_id = order_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getCustomer_id() {
-        return customer_id;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer_id(Integer customer_id) {
-        this.customer_id = customer_id;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
-    public Instant getOrder_date() {
-        return order_date;
+    public Instant getOrderDate() {
+        return orderDate;
     }
 
-    public void setOrder_date(Instant order_date) {
-        this.order_date = order_date;
+    public void setOrderDate(Instant orderDate) {
+        this.orderDate = orderDate;
     }
 
     public BigDecimal getSubtotal() {
@@ -97,28 +97,28 @@ public class Order implements Serializable {
         this.total = total;
     }
 
-    public Integer getOrder_status_id() {
-        return order_status_id;
+    public Integer getOrderStatusId() {
+        return orderStatusId;
     }
 
-    public void setOrder_status_id(Integer order_status_id) {
-        this.order_status_id = order_status_id;
+    public void setOrderStatusId(Integer orderStatusId) {
+        this.orderStatusId = orderStatusId;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
     public Set<OrderItem> getOrderItems() {

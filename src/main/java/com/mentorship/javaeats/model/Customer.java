@@ -7,65 +7,65 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "customer", schema = "javaeat_lites")
 public class Customer implements Serializable {
     private static final long serialVersionUID = -8242597705528208474L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id", nullable = false)
-    private Integer customer_id;
+    private Integer id;
 
     @Column(name = "user_id", nullable = false)
-    private Integer user_id;
+    private Integer userId;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    @OneToMany(mappedBy = "customer_id")
+    @OneToMany(mappedBy = "customerId")
     private Set<Address> addresses = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "customer_id")
+    @OneToMany(mappedBy = "customerId")
     private Set<Cart> carts = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "customer_id")
+    @OneToMany(mappedBy = "customerId")
     private Set<Order> orders = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "customer_id")
+    @OneToMany(mappedBy = "customerId")
     private Set<PreferredPaymentSetting> preferredPaymentSettings = new LinkedHashSet<>();
 
-    public Integer getCustomer_id() {
-        return customer_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCustomer_id(Integer customer_id) {
-        this.customer_id = customer_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
     public Set<Address> getAddresses() {

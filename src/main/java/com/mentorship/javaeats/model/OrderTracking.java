@@ -5,75 +5,75 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @Entity
-@Table(name = "order_tracking")
+@Table(name = "order_tracking", schema = "javaeat_lites")
 public class OrderTracking implements Serializable {
     private static final long serialVersionUID = 667587576458909021L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_tracking_id", nullable = false)
-    private Integer order_tracking_id;
+    private Integer id;
 
     @Column(name = "order_id", nullable = false)
-    private Integer order_id;
+    private Integer orderId;
 
     @Column(name = "current_location", nullable = false)
-    private String current_location;
+    private String currentLocation;
 
     @Column(name = "estimated_delivery_time", nullable = false)
-    private Instant estimated_delivery_time;
+    private Instant estimatedDeliveryTime;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    public Integer getOrder_tracking_id() {
-        return order_tracking_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setOrder_tracking_id(Integer order_tracking_id) {
-        this.order_tracking_id = order_tracking_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getOrder_id() {
-        return order_id;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setOrder_id(Integer order_id) {
-        this.order_id = order_id;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
-    public String getCurrent_location() {
-        return current_location;
+    public String getCurrentLocation() {
+        return currentLocation;
     }
 
-    public void setCurrent_location(String current_location) {
-        this.current_location = current_location;
+    public void setCurrentLocation(String currentLocation) {
+        this.currentLocation = currentLocation;
     }
 
-    public Instant getEstimated_delivery_time() {
-        return estimated_delivery_time;
+    public Instant getEstimatedDeliveryTime() {
+        return estimatedDeliveryTime;
     }
 
-    public void setEstimated_delivery_time(Instant estimated_delivery_time) {
-        this.estimated_delivery_time = estimated_delivery_time;
+    public void setEstimatedDeliveryTime(Instant estimatedDeliveryTime) {
+        this.estimatedDeliveryTime = estimatedDeliveryTime;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
 }

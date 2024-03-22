@@ -7,13 +7,13 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "\"user\"")
+@Table(name = "\"user\"", schema = "javaeat_lites")
 public class User implements Serializable {
     private static final long serialVersionUID = -4255995890103524333L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
-    private Integer user_id;
+    private Integer id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -25,7 +25,7 @@ public class User implements Serializable {
     private String password;
 
     @Column(name = "user_type_id", nullable = false)
-    private Integer user_type_id;
+    private Integer userTypeId;
 
     @Column(name = "phone", nullable = false)
     private String phone;
@@ -34,26 +34,26 @@ public class User implements Serializable {
     private String status;
 
     @Column(name = "created_on", nullable = false)
-    private Instant created_on;
+    private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    private Instant updated_on;
+    private Instant updatedOn;
 
-    @OneToMany(mappedBy = "user_id")
+    @OneToMany(mappedBy = "userId")
     private Set<Auditing> auditings = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "user_id")
+    @OneToMany(mappedBy = "userId")
     private Set<Customer> customers = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "user_id")
+    @OneToMany(mappedBy = "userId")
     private Set<UserRole> userRoles = new LinkedHashSet<>();
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -80,12 +80,12 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Integer getUser_type_id() {
-        return user_type_id;
+    public Integer getUserTypeId() {
+        return userTypeId;
     }
 
-    public void setUser_type_id(Integer user_type_id) {
-        this.user_type_id = user_type_id;
+    public void setUserTypeId(Integer userTypeId) {
+        this.userTypeId = userTypeId;
     }
 
     public String getPhone() {
@@ -104,20 +104,20 @@ public class User implements Serializable {
         this.status = status;
     }
 
-    public Instant getCreated_on() {
-        return created_on;
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Instant created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
     }
 
-    public Instant getUpdated_on() {
-        return updated_on;
+    public Instant getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setUpdated_on(Instant updated_on) {
-        this.updated_on = updated_on;
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
     public Set<Auditing> getAuditings() {
