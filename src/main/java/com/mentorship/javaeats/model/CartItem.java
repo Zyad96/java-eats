@@ -1,10 +1,17 @@
 package com.mentorship.javaeats.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "cart_item", schema = "javaeat_lites")
 public class CartItem implements Serializable {
@@ -35,68 +42,10 @@ public class CartItem implements Serializable {
     @Column(name = "updated_on", nullable = false)
     private Instant updatedOn;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(Integer cartId) {
-        this.cartId = cartId;
-    }
-
-    public Integer getMenuItemId() {
-        return menuItemId;
-    }
-
-    public void setMenuItemId(Integer menuItemId) {
-        this.menuItemId = menuItemId;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public BigDecimal getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Instant createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Instant getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Instant updatedOn) {
-        this.updatedOn = updatedOn;
+    @PrePersist
+    protected void onCreate() {
+        createdOn = Instant.now();
+        updatedOn = Instant.now();
     }
 
 }

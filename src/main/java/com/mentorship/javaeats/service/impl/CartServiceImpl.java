@@ -1,7 +1,7 @@
-package com.mentorship.javaeats.service.serviceimpl;
+package com.mentorship.javaeats.service.impl;
 
 
-
+import com.mentorship.javaeats.dto.CartItemRequest;
 import com.mentorship.javaeats.model.Cart;
 import com.mentorship.javaeats.model.CartItem;
 import com.mentorship.javaeats.repository.CartItemRepository;
@@ -10,15 +10,13 @@ import com.mentorship.javaeats.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-
 @Service
 public class CartServiceImpl implements CartService {
 
 
-
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
+
     @Autowired
     public CartServiceImpl(CartItemRepository cartItemRepository, CartRepository cartRepository) {
         this.cartItemRepository = cartItemRepository;
@@ -26,26 +24,26 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartItem updateCartItem(int cartId, CartItem cartItem) {
+    public void updateCartItemQuantity(int cartId, CartItemRequest cartItemRequest) {
+        CartItem existingCartItem = getCart(cartId).getCartItem(cartItemRequest.getId());
+        updateItemQuantity(existingCartItem, cartItemRequest);
+    }
 
-        Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("Cart not found"));
 
-        CartItem existingCartItem = cart.getCartItem(cartItem.getId());
-
+    private void updateItemQuantity(CartItem existingCartItem, CartItemRequest cartItemRequest) {
         if (existingCartItem != null) {
-
-            existingCartItem.setQuantity(cartItem.getQuantity());
-
-            return cartItemRepository.save(existingCartItem);
+            existingCartItem.setQuantity(cartItemRequest.getQuantity());
+            existingCartItem.setUnitPrice(cartItemRequest.getUnitPrice());
+            existingCartItem.setTotalPrice(cartItemRequest.getTotalPrice());
+            cartItemRepository.save(existingCartItem);
         } else {
             throw new IllegalArgumentException("Cart Item not found in the Cart");
         }
     }
 
-
-
-    public Set<CartItem> getCartItems(int cartId) {
-        Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("Cart not found"));
-        return cart.getCartItems();
+    private Cart getCart(int cartId) {
+        // handle the exception
+        return cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("Cart not found"));
     }
+
 }
