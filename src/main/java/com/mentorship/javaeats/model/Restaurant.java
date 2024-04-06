@@ -1,11 +1,15 @@
 package com.mentorship.javaeats.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
+@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "restaurant", schema = "javaeat_lites")
 public class Restaurant implements Serializable {
@@ -27,66 +31,22 @@ public class Restaurant implements Serializable {
     @Column(name = "updated_on", nullable = false)
     private Instant updatedOn;
 
-    @OneToMany(mappedBy = "restaurantId")
-    private Set<Menu> menus = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "restaurantId")
-    private Set<RestaurantDetail> restaurantDetails = new LinkedHashSet<>();
-
-    public Integer getId() {
-        return id;
+    @PrePersist
+    protected void onCreate() {
+        createdOn = Instant.now();
+        updatedOn = Instant.now();
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @OneToMany
+    @JoinColumn(name = "menu_id")
+    private Set<Menu> menus;
 
-    public String getName() {
-        return name;
-    }
+    @OneToMany
+    @JoinColumn(name = "restaurant_details_id")
+    private Set<RestaurantDetail> restaurantDetails;
 
-    public void setName(String name) {
+    public Restaurant(String name, String status) {
         this.name = name;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
         this.status = status;
     }
-
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Instant createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Instant getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Instant updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public Set<Menu> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(Set<Menu> menus) {
-        this.menus = menus;
-    }
-
-    public Set<RestaurantDetail> getRestaurantDetails() {
-        return restaurantDetails;
-    }
-
-    public void setRestaurantDetails(Set<RestaurantDetail> restaurantDetails) {
-        this.restaurantDetails = restaurantDetails;
-    }
-
 }

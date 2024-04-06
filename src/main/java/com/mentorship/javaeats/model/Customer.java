@@ -1,11 +1,13 @@
 package com.mentorship.javaeats.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "customer", schema = "javaeat_lites")
 public class Customer implements Serializable {
@@ -15,89 +17,31 @@ public class Customer implements Serializable {
     @Column(name = "customer_id", nullable = false)
     private Integer id;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
-
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
     private Instant updatedOn;
 
-    @OneToMany(mappedBy = "customerId")
-    private Set<Address> addresses = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "customerId")
-    private Set<Cart> carts = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "customerId")
-    private Set<Order> orders = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "customerId")
-    private Set<PreferredPaymentSetting> preferredPaymentSettings = new LinkedHashSet<>();
-
-    public Integer getId() {
-        return id;
+    @PrePersist
+    protected void onCreate() {
+        createdOn = Instant.now();
+        updatedOn = Instant.now();
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @OneToMany
+    @JoinColumn(name = "address_id")
+    private Set<Address> addresses;
 
-    public Integer getUserId() {
-        return userId;
-    }
+    @OneToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+    @OneToMany
+    @JoinColumn(name = "order_id")
+    private Set<Order> orders;
 
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Instant createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Instant getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Instant updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public Set<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(Set<Address> addresses) {
-        this.addresses = addresses;
-    }
-
-    public Set<Cart> getCarts() {
-        return carts;
-    }
-
-    public void setCarts(Set<Cart> carts) {
-        this.carts = carts;
-    }
-
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
-    }
-
-    public Set<PreferredPaymentSetting> getPreferredPaymentSettings() {
-        return preferredPaymentSettings;
-    }
-
-    public void setPreferredPaymentSettings(Set<PreferredPaymentSetting> preferredPaymentSettings) {
-        this.preferredPaymentSettings = preferredPaymentSettings;
-    }
-
+    @OneToOne
+    @JoinColumn(name = "preferred_payment_setting_id")
+    private PreferredPaymentSetting preferredPaymentSetting;
 }

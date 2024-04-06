@@ -1,12 +1,20 @@
 package com.mentorship.javaeats.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.LinkedHashSet;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "\"order\"", schema = "javaeat_lites")
 public class Order implements Serializable {
@@ -15,9 +23,6 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id", nullable = false)
     private Integer id;
-
-    @Column(name = "customer_id", nullable = false)
-    private Integer customerId;
 
     @Column(name = "order_date", nullable = false)
     private Instant orderDate;
@@ -31,118 +36,29 @@ public class Order implements Serializable {
     @Column(name = "total", nullable = false)
     private BigDecimal total;
 
-    @Column(name = "order_status_id", nullable = false)
-    private Integer orderStatusId;
-
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
 
     @Column(name = "updated_on", nullable = false)
     private Instant updatedOn;
 
-    @OneToMany(mappedBy = "orderId")
-    private Set<OrderItem> orderItems = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "orderId")
-    private Set<OrderTracking> orderTrackings = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "orderId")
-    private Set<Transaction> transactions = new LinkedHashSet<>();
-
-    public Integer getId() {
-        return id;
+    @PrePersist
+    protected void onCreate() {
+        createdOn = Instant.now();
+        updatedOn = Instant.now();
+        orderDate = LocalDate.now().atStartOfDay().toInstant(ZoneOffset.UTC);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @OneToMany
+    @JoinColumn(name = "order_item_id")
+    private Set<OrderItem> orderItems;
 
-    public Integer getCustomerId() {
-        return customerId;
-    }
+    @OneToMany
+    @JoinColumn(name = "order_tracking_id")
+    private Set<OrderTracking> orderTrackings;
 
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
-    }
-
-    public Instant getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Instant orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public BigDecimal getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(BigDecimal subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public BigDecimal getTax() {
-        return tax;
-    }
-
-    public void setTax(BigDecimal tax) {
-        this.tax = tax;
-    }
-
-    public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = total;
-    }
-
-    public Integer getOrderStatusId() {
-        return orderStatusId;
-    }
-
-    public void setOrderStatusId(Integer orderStatusId) {
-        this.orderStatusId = orderStatusId;
-    }
-
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Instant createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Instant getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Instant updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public Set<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(Set<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
-
-    public Set<OrderTracking> getOrderTrackings() {
-        return orderTrackings;
-    }
-
-    public void setOrderTrackings(Set<OrderTracking> orderTrackings) {
-        this.orderTrackings = orderTrackings;
-    }
-
-    public Set<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
-    }
+    @OneToMany
+    @JoinColumn(name = "transaction_id")
+    private Set<Transaction> transactions;
 
 }

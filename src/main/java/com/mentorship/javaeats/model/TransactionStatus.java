@@ -1,11 +1,13 @@
 package com.mentorship.javaeats.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "transaction_status", schema = "javaeat_lites")
 public class TransactionStatus implements Serializable {
@@ -24,47 +26,8 @@ public class TransactionStatus implements Serializable {
     @Column(name = "updated_on", nullable = false)
     private Instant updatedOn;
 
-    @OneToMany(mappedBy = "transactionStatusId")
-    private Set<Transaction> transactions = new LinkedHashSet<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Instant createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Instant getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Instant updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public Set<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
-    }
+    @OneToMany
+    @JoinColumn(name = "transaction_id")
+    private Set<Transaction> transactions;
 
 }

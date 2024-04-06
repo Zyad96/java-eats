@@ -21,12 +21,6 @@ public class CartItem implements Serializable {
     @Column(name = "cart_item_id", nullable = false)
     private Integer id;
 
-    @Column(name = "cart_id", nullable = false)
-    private Integer cartId;
-
-    @Column(name = "menu_item_id", nullable = false)
-    private Integer menuItemId;
-
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 

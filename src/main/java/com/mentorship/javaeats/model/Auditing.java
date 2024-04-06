@@ -1,9 +1,12 @@
 package com.mentorship.javaeats.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 
+@Data
 @Entity
 @Table(name = "auditing", schema = "javaeat_lites")
 public class Auditing implements Serializable {
@@ -13,46 +16,11 @@ public class Auditing implements Serializable {
     @Column(name = "auditing_id", nullable = false)
     private Integer id;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
-
     @Column(name = "action", nullable = false)
     private String action;
 
     @Column(name = "\"timestamp\"")
     private Instant timestamp;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public Instant getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Instant timestamp) {
-        this.timestamp = timestamp;
-    }
 
 /*
  TODO [JPA Buddy] create field to map the 'details' column
