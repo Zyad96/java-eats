@@ -3,11 +3,13 @@ package com.mentorship.javaeats.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -35,6 +37,11 @@ public class CartItem implements Serializable {
 
     @Column(name = "updated_on", nullable = false)
     private Instant updatedOn;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="cart_item_id")
+    @ToString.Exclude
+    private Set<MenuItem> menuItem;
 
     @PrePersist
     protected void onCreate() {

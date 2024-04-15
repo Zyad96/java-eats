@@ -50,15 +50,15 @@ public class Order implements Serializable {
     }
 
     @OneToMany
-    @JoinColumn(name = "order_item_id")
+    @JoinColumn(name = "order_id")
     private Set<OrderItem> orderItems;
 
     @OneToMany
-    @JoinColumn(name = "order_tracking_id")
+    @JoinColumn(name = "order_id")
     private Set<OrderTracking> orderTrackings;
 
     @OneToMany
-    @JoinColumn(name = "transaction_id")
+    @JoinColumn(name = "order_id")
     private Set<Transaction> transactions;
 
 }

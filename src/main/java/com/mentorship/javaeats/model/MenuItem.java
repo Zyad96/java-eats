@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.persistence.JoinTable;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -42,19 +43,26 @@ public class MenuItem implements Serializable {
     @Column(name = "updated_on", nullable = false)
     private Instant updatedOn;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "cart_item_id")
-    @ToString.Exclude
-    private Set<CartItem> cartItems;
-
-    @ManyToMany
-    @JoinColumn(name = "ingredient_id")
+@ManyToMany
+    @JoinTable(
+            name = "menu_item_ingredients",
+            joinColumns = @JoinColumn(name = "menu_item_id",referencedColumnName = "menu_item_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id",referencedColumnName = "ingredient_id"))
     @ToString.Exclude
     private Set<Ingredient> ingredients;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "order_item_id")
+    @JoinColumn(name = "menu_item_id")
     @ToString.Exclude
     private Set<OrderItem> orderItems;
+
+    public Ingredient getIngredient(int ingredientId) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getId() == ingredientId) {
+                return ingredient;
+            }
+        }
+        return null;
+    }
 
 }

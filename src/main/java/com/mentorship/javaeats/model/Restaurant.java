@@ -38,11 +38,11 @@ public class Restaurant implements Serializable {
     }
 
     @OneToMany
-    @JoinColumn(name = "menu_id")
+    @JoinColumn(name = "restaurant_id")
     private Set<Menu> menus;
 
     @OneToMany
-    @JoinColumn(name = "restaurant_details_id")
+    @JoinColumn(name = "restaurant_id")
     private Set<RestaurantDetail> restaurantDetails;
 
     public Restaurant(String name, String status) {

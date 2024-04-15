@@ -7,4 +7,6 @@ public interface CartService {
 
     public void updateCartItemQuantity(int cartId, CartItemRequest cartItemRequest);
 
+    public String addToCart(Integer menuItemId, Integer userId);
+
 }

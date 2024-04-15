@@ -1,9 +1,11 @@
 package com.mentorship.javaeats.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
-
+@Data
 @Entity
 @Table(name = "user_type", schema = "javaeat_lites")
 public class UserType implements Serializable {

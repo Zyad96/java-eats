@@ -27,7 +27,7 @@ public class PaymentTypeConfiguration implements Serializable {
     private Instant updatedOn;
 
     @OneToMany
-    @JoinColumn(name = "preferred_payment_setting_id")
+    @JoinColumn(name = "payment_type_configuration_id")
     private Set<PreferredPaymentSetting> preferredPaymentSettings;
 
 }

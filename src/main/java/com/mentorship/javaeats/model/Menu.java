@@ -30,7 +30,7 @@ public class Menu implements Serializable {
     private Instant updatedOn;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "menu_item_id")
+    @JoinColumn(name = "menu_id")
     private Set<MenuItem> menuItems;
 
 }

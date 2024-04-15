@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "\"user\"", schema = "javaeat_lites")
+@Table(name = "user", schema = "javaeat_lites")
 public class User implements Serializable {
     private static final long serialVersionUID = -4255995890103524333L;
     @Id
@@ -39,15 +39,19 @@ public class User implements Serializable {
     private Instant updatedOn;
 
     @OneToMany
-    @JoinColumn(name = "auditing_id")
+    @JoinColumn(name = "user_id")
     private Set<Auditing> auditings;
 
     @OneToMany
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "user_id")
     private Set<Customer> customers;
 
     @ManyToMany
-    @JoinColumn(name = "role_id")
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id",referencedColumnName = "id")
+    )
     private Set<Role> roles;
 
     @OneToOne

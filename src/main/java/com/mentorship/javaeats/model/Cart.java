@@ -43,11 +43,11 @@ public class Cart implements Serializable {
     }
 
     @OneToMany
-    @JoinColumn(name = "cart_items_id")
-    private Set<CartItem> cartItems;
+    @JoinColumn(name="cart_id")
+    private Set<CartItem> cartItem;
 
     public CartItem getCartItem(int cartItemId){
-        for(CartItem item : cartItems){
+        for(CartItem item : cartItem){
             if (item.getId() == cartItemId){
                 return item;
             }

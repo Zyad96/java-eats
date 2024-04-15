@@ -29,6 +29,12 @@ public class CartServiceImpl implements CartService {
         updateItemQuantity(existingCartItem, cartItemRequest);
     }
 
+    @Override
+    public String addToCart(Integer menuItemId, Integer userId) {
+
+        return null;
+    }
+
 
     private void updateItemQuantity(CartItem existingCartItem, CartItemRequest cartItemRequest) {
         if (existingCartItem != null) {

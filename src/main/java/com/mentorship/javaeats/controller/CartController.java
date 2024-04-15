@@ -24,5 +24,11 @@ public class CartController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping
+    public  ResponseEntity<Void> addItemtoCart(@PathVariable Integer menuItemId, @PathVariable Integer userId){
+
+        return ResponseEntity.ok().build();
+    }
+
 
 }

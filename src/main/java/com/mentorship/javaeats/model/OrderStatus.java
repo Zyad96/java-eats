@@ -27,7 +27,7 @@ public class OrderStatus implements Serializable {
     private Instant updatedOn;
 
     @OneToMany
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_status_id")
     private Set<Order> orders;
 
 }

@@ -28,7 +28,7 @@ public class Transaction implements Serializable {
     private Instant updatedOn;
 
     @OneToMany
-    @JoinColumn(name = "transaction_detail_id")
+    @JoinColumn(name = "transaction_id")
     private Set<TransactionDetail> transactionDetails;
 
 }

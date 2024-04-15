@@ -30,7 +30,7 @@ public class PaymentIntegrationType implements Serializable {
     private Instant updatedOn;
 
     @OneToMany
-    @JoinColumn(name = "payment_type_configuration_id")
+    @JoinColumn(name = "payment_integration_type_id")
     private Set<PaymentTypeConfiguration> paymentTypeConfigurations;
 
 }

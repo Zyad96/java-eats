@@ -30,7 +30,7 @@ public class Customer implements Serializable {
     }
 
     @OneToMany
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "customer_id")
     private Set<Address> addresses;
 
     @OneToOne
@@ -38,7 +38,7 @@ public class Customer implements Serializable {
     private Cart cart;
 
     @OneToMany
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "customer_id")
     private Set<Order> orders;
 
     @OneToOne
