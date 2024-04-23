@@ -33,6 +33,14 @@ public class OrderItem implements Serializable {
     @Column(name = "updated_on", nullable = false)
     private Instant updatedOn;
 
+    public OrderItem(Integer id, Integer quantity, BigDecimal price, String pending) {
+        this.id = id;
+        this.quantity = quantity;
+        this.price = price;
+        this.status = pending;
+    }
+
+
     @PrePersist
     protected void onCreate() {
         createdOn = Instant.now();

@@ -42,6 +42,14 @@ public class Order implements Serializable {
     @Column(name = "updated_on", nullable = false)
     private Instant updatedOn;
 
+    public Order(Integer customerId, Set<OrderItem> orderItems, int i, BigDecimal subtotal, BigDecimal tax, BigDecimal total) {
+        this.id = customerId;
+        this.orderItems = orderItems;
+        this.subtotal = subtotal;
+        this.tax = tax;
+        this.total = total;
+    }
+
     @PrePersist
     protected void onCreate() {
         createdOn = Instant.now();
