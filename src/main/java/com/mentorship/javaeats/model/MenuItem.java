@@ -51,7 +51,7 @@ public class MenuItem implements Serializable {
     @ToString.Exclude
     private Set<Ingredient> ingredients;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "menu_item_id")
     @ToString.Exclude
     private Set<OrderItem> orderItems;

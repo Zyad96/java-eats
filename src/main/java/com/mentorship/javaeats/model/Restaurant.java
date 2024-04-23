@@ -41,9 +41,9 @@ public class Restaurant implements Serializable {
     @JoinColumn(name = "restaurant_id")
     private Set<Menu> menus;
 
-    @OneToMany
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "restaurant_id")
-    private Set<RestaurantDetail> restaurantDetails;
+    private RestaurantDetail restaurantDetails;
 
     public Restaurant(String name, String status) {
         this.name = name;

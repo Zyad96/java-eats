@@ -1,11 +1,13 @@
 package com.mentorship.javaeats.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "restaurant_details", schema = "javaeat_lites")
@@ -29,6 +31,10 @@ public class RestaurantDetail implements Serializable {
     protected void onCreate() {
         createdOn = Instant.now();
         updatedOn = Instant.now();
+    }
+
+    public RestaurantDetail(String description) {
+        this.description = description;
     }
 
 }
