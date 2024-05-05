@@ -1,4 +1,4 @@
-package com.mentorship.javaeats.model;
+package com.mentorship.javaeats.model.Entity;
 
 import lombok.Data;
 
@@ -14,7 +14,7 @@ public class RestaurantDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "restaurant_details_id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "description", nullable = false)
     private String description;
@@ -22,13 +22,9 @@ public class RestaurantDetail implements Serializable {
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
 
-    @Column(name = "updated_on", nullable = false)
-    private Instant updatedOn;
-
     @PrePersist
     protected void onCreate() {
         createdOn = Instant.now();
-        updatedOn = Instant.now();
     }
 
 }

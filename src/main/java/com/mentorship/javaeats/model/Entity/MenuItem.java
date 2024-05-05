@@ -1,4 +1,4 @@
-package com.mentorship.javaeats.model;
+package com.mentorship.javaeats.model.Entity;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class MenuItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "menu_item_id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -31,8 +31,8 @@ public class MenuItem implements Serializable {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @Column(name = "status", nullable = false)
-    private String status;
+    @Column(name = "is_visible", nullable = false)
+    private Boolean isVisible;
 
     @Column(name = "stock_quantity")
     private Integer stockQuantity;
@@ -40,21 +40,18 @@ public class MenuItem implements Serializable {
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
 
-    @Column(name = "updated_on", nullable = false)
-    private Instant updatedOn;
+    @PrePersist
+    public void onCreate() {
+        createdOn = Instant.now();
+    }
 
-@ManyToMany
+    @ManyToMany
     @JoinTable(
             name = "menu_item_ingredients",
             joinColumns = @JoinColumn(name = "menu_item_id",referencedColumnName = "menu_item_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id",referencedColumnName = "ingredient_id"))
     @ToString.Exclude
     private Set<Ingredient> ingredients;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "menu_item_id")
-    @ToString.Exclude
-    private Set<OrderItem> orderItems;
 
     public Ingredient getIngredient(int ingredientId) {
         for (Ingredient ingredient : ingredients) {
@@ -64,5 +61,4 @@ public class MenuItem implements Serializable {
         }
         return null;
     }
-
 }

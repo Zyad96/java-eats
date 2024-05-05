@@ -1,4 +1,4 @@
-package com.mentorship.javaeats.model;
+package com.mentorship.javaeats.model.Entity;
 
 import lombok.Data;
 
@@ -14,10 +14,7 @@ public class Auditing implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "auditing_id", nullable = false)
-    private Integer id;
-
-    @Column(name = "action", nullable = false)
-    private String action;
+    private Long id;
 
     @Column(name = "\"timestamp\"")
     private Instant timestamp;

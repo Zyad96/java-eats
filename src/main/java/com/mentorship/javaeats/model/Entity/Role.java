@@ -1,9 +1,12 @@
-package com.mentorship.javaeats.model;
+package com.mentorship.javaeats.model.Entity;
+
+import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 
+@Data
 @Entity
 @Table(name = "role", schema = "javaeat_lites")
 public class Role implements Serializable {
@@ -11,7 +14,7 @@ public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -19,7 +22,9 @@ public class Role implements Serializable {
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
 
-    @Column(name = "updated_on", nullable = false)
-    private Instant updatedOn;
+    @PrePersist
+    protected void onCreate() {
+        createdOn = Instant.now();
+    }
 
 }

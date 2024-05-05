@@ -1,4 +1,4 @@
-package com.mentorship.javaeats.model;
+package com.mentorship.javaeats.model.Entity;
 
 import lombok.Data;
 
@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.Set;
 
 @Data
 @Entity
@@ -16,7 +15,7 @@ public class Transaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
@@ -24,11 +23,16 @@ public class Transaction implements Serializable {
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
 
-    @Column(name = "updated_on", nullable = false)
-    private Instant updatedOn;
+    @PrePersist
+    protected void onCreate() {
+        createdOn = Instant.now();
+    }
 
-    @OneToMany
-    @JoinColumn(name = "transaction_id")
-    private Set<TransactionDetail> transactionDetails;
+    @OneToOne
+    @JoinColumn(name = "transaction_details_id")
+    private TransactionDetail transactionDetail;
 
+    @OneToOne
+    @JoinColumn(name = "transaction_status_id")
+    private TransactionStatus transactionStatus;
 }

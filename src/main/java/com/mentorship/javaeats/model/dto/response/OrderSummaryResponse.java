@@ -1,6 +1,7 @@
 package com.mentorship.javaeats.model.dto.response;
 
 
+import com.mentorship.javaeats.model.Entity.OrderItem;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -11,14 +12,14 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Data
 public class OrderSummaryResponse {
-    private Set<MenuItemResponse> menuItemResponseSet;
+    private Set<OrderItem> orderItems;
     private BigDecimal totalAmount;
     private Instant orderDate;
     private String orderStatus;
 
 
-    public OrderSummaryResponse(Set<MenuItemResponse> menuItemResponseSet, BigDecimal total, Instant orderDate, String orderStatus) {
-        this.menuItemResponseSet = menuItemResponseSet;
+    public OrderSummaryResponse(Set<OrderItem> orderItems, BigDecimal total, Instant orderDate, String orderStatus) {
+        this.orderItems = orderItems;
         this.totalAmount = total;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;

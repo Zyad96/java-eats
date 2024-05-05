@@ -3,12 +3,15 @@ package com.mentorship.javaeats.model.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Random;
 import java.util.Set;
 
@@ -31,28 +34,27 @@ public class Order implements Serializable {
     private BigDecimal subtotal;
 
     @Column(name = "tax", nullable = false)
+    @Formula("subtotal * 0.14")
     private BigDecimal tax;
 
     @Column(name = "total", nullable = false)
+    @Formula("subtotal + tax")
     private BigDecimal total;
 
-    public Order(BigDecimal subtotal, BigDecimal tax, BigDecimal total, OrderStatus orderStatus ,OrderTracking orderTracking){
+    public Order(Long customerId, Set<OrderItem> orderItems, int i, BigDecimal subtotal, BigDecimal tax, BigDecimal total) {
+        this.id = customerId;
+        this.orderItems = orderItems;
         this.subtotal = subtotal;
         this.tax = tax;
         this.total = total;
-        this.orderStatus = orderStatus;
-        this.orderTracking = orderTracking;
     }
 
     @PrePersist
-    @PreUpdate
     protected void onCreate() {
-        orderDate = Instant.now();
+        orderDate = LocalDate.now().atStartOfDay().toInstant(ZoneOffset.UTC);
         if(orderTracking != null) {
             orderTracking.setEstimatedDeliveryTime(generateEstimatedDeliveryTime());
         }
-        this.tax = this.subtotal.multiply(BigDecimal.valueOf(0.14));
-        this.total = this.subtotal.add(this.tax);
     }
 
     @OneToMany

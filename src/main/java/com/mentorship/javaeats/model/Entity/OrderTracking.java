@@ -1,10 +1,10 @@
-package com.mentorship.javaeats.model;
+package com.mentorship.javaeats.model.Entity;
 
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.Duration;
 
 @Data
 @Entity
@@ -14,18 +14,11 @@ public class OrderTracking implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_tracking_id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "current_location", nullable = false)
     private String currentLocation;
 
     @Column(name = "estimated_delivery_time", nullable = false)
-    private Instant estimatedDeliveryTime;
-
-    @Column(name = "created_on", nullable = false)
-    private Instant createdOn;
-
-    @Column(name = "updated_on", nullable = false)
-    private Instant updatedOn;
-
+    private Duration estimatedDeliveryTime;
 }

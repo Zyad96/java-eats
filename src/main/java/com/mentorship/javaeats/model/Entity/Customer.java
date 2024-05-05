@@ -1,4 +1,4 @@
-package com.mentorship.javaeats.model;
+package com.mentorship.javaeats.model.Entity;
 
 import lombok.Data;
 
@@ -15,18 +15,27 @@ public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
 
-    @Column(name = "updated_on", nullable = false)
-    private Instant updatedOn;
+    @Column(name = "deleted_on", nullable = false)
+    private Instant deletedOn;
+
+    @Column(name = "is_deleted", nullable = false, columnDefinition = "boolean default false")
+    private Boolean isDeleted;
 
     @PrePersist
     protected void onCreate() {
         createdOn = Instant.now();
-        updatedOn = Instant.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        if(isDeleted) {
+            deletedOn = Instant.now();
+        }
     }
 
     @OneToMany
@@ -42,6 +51,10 @@ public class Customer implements Serializable {
     private Set<Order> orders;
 
     @OneToOne
-    @JoinColumn(name = "preferred_payment_setting_id")
-    private PreferredPaymentSetting preferredPaymentSetting;
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany
+    @JoinColumn(name = "customer_id")
+    private Set<PaymentMethod> paymentMethods;
 }

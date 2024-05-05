@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,20 +29,18 @@ public class CartItem implements Serializable {
     private BigDecimal unitPrice;
 
     @Column(name = "total_price", nullable = false)
+    @Formula("quantity * unit_price")
     private BigDecimal totalPrice;
 
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
 
     @PrePersist
-    @PreUpdate
     protected void onCreate() {
         createdOn = Instant.now();
-        this.totalPrice = this.unitPrice.multiply(BigDecimal.valueOf(this.quantity));
     }
 
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name="cart_item_id")
     @ToString.Exclude
     @MapsId

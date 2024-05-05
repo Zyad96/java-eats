@@ -1,4 +1,4 @@
-package com.mentorship.javaeats.model;
+package com.mentorship.javaeats.model.Entity;
 
 import lombok.Data;
 
@@ -15,22 +15,24 @@ public class Menu implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "menu_id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "status", nullable = false)
-    private String status;
+    @Column(name = "is_visible", nullable = false)
+    private Boolean isVisible;
 
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
 
-    @Column(name = "updated_on", nullable = false)
-    private Instant updatedOn;
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "menu_id")
     private Set<MenuItem> menuItems;
+
+    @PrePersist
+    protected void onCreate() {
+        createdOn = Instant.now();
+    }
 
 }
