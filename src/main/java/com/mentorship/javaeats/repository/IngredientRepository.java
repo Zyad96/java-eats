@@ -1,7 +1,8 @@
 package com.mentorship.javaeats.repository;
 
-import com.mentorship.javaeats.model.Ingredient;
+
+import com.mentorship.javaeats.model.Entity.Ingredient;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IngredientRepository extends JpaRepository<Ingredient, Integer> {
+public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 }

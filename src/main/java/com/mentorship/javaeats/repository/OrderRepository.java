@@ -1,10 +1,8 @@
 package com.mentorship.javaeats.repository;
 
+
+import com.mentorship.javaeats.model.Entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import com.mentorship.javaeats.model.Order;
-
-@Repository
-public interface OrderRepository extends JpaRepository<Order, Integer> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 }
