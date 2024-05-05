@@ -1,6 +1,7 @@
-package com.mentorship.javaeats.model;
+package com.mentorship.javaeats.model.Entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,15 +17,17 @@ public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "subtotal", nullable = false)
     private BigDecimal subtotal;
 
     @Column(name = "tax", nullable = false)
+    @Formula("subtotal * 0.14")
     private BigDecimal tax;
 
     @Column(name = "total", nullable = false)
+    @Formula("subtotal + tax")
     private BigDecimal total;
 
     @Column(name = "status", nullable = false)
@@ -33,25 +36,14 @@ public class Cart implements Serializable {
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
 
-    @Column(name = "updated_on", nullable = false)
-    private Instant updatedOn;
 
     @PrePersist
     protected void onCreate() {
         createdOn = Instant.now();
-        updatedOn = Instant.now();
     }
 
     @OneToMany
     @JoinColumn(name="cart_id")
-    private Set<CartItem> cartItem;
+    private Set<CartItem> cartItems;
 
-    public CartItem getCartItem(int cartItemId){
-        for(CartItem item : cartItem){
-            if (item.getId() == cartItemId){
-                return item;
-            }
-        }
-        return null;
-    }
 }

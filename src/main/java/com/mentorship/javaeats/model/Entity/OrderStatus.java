@@ -1,11 +1,10 @@
-package com.mentorship.javaeats.model;
+package com.mentorship.javaeats.model.Entity;
 
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Set;
 
 @Data
 @Entity
@@ -15,19 +14,17 @@ public class OrderStatus implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_status_id", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @Column(name = "status", nullable = false)
-    private String status;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
 
-    @Column(name = "updated_on", nullable = false)
-    private Instant updatedOn;
-
-    @OneToMany
-    @JoinColumn(name = "order_status_id")
-    private Set<Order> orders;
+    @PrePersist
+    protected void onCreate() {
+        createdOn = Instant.now();
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.mentorship.javaeats.model;
+package com.mentorship.javaeats.model.Entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,9 +14,8 @@ import java.time.Instant;
 public class OrderItem implements Serializable {
     private static final long serialVersionUID = -2430065943374712760L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
@@ -24,19 +23,22 @@ public class OrderItem implements Serializable {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @Column(name = "status", nullable = false)
-    private String status;
-
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
-
-    @Column(name = "updated_on", nullable = false)
-    private Instant updatedOn;
 
     @PrePersist
     protected void onCreate() {
         createdOn = Instant.now();
-        updatedOn = Instant.now();
     }
 
+    @OneToOne
+    @JoinColumn(name = "order_item_id")
+    @MapsId
+    private MenuItem menuItem;
+
+    public OrderItem(Long id, Integer quantity, BigDecimal price) {
+        this.id = id;
+        this.quantity = quantity;
+        this.price = price;
+    }
 }

@@ -1,4 +1,4 @@
-package com.mentorship.javaeats.dto;
+package com.mentorship.javaeats.model.dto.request;
 
 import lombok.Data;
 
