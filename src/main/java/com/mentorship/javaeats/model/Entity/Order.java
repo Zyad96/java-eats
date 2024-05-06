@@ -3,7 +3,6 @@ package com.mentorship.javaeats.model.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,11 +33,9 @@ public class Order implements Serializable {
     private BigDecimal subtotal;
 
     @Column(name = "tax", nullable = false)
-    @Formula("subtotal * 0.14")
     private BigDecimal tax;
 
     @Column(name = "total", nullable = false)
-    @Formula("subtotal + tax")
     private BigDecimal total;
 
     public Order(Long customerId, Set<OrderItem> orderItems, int i, BigDecimal subtotal, BigDecimal tax, BigDecimal total) {
@@ -55,6 +52,8 @@ public class Order implements Serializable {
         if(orderTracking != null) {
             orderTracking.setEstimatedDeliveryTime(generateEstimatedDeliveryTime());
         }
+        this.tax = this.subtotal.multiply(BigDecimal.valueOf(0.14));
+        this.total = this.subtotal.add(this.tax);
     }
 
     @OneToMany
