@@ -1,7 +1,6 @@
 package com.mentorship.javaeats.model.Entity;
 
 import lombok.Data;
-import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,11 +22,9 @@ public class Cart implements Serializable {
     private BigDecimal subtotal;
 
     @Column(name = "tax", nullable = false)
-    @Formula("subtotal * 0.14")
     private BigDecimal tax;
 
     @Column(name = "total", nullable = false)
-    @Formula("subtotal + tax")
     private BigDecimal total;
 
     @Column(name = "status", nullable = false)
@@ -38,8 +35,11 @@ public class Cart implements Serializable {
 
 
     @PrePersist
+    @PreUpdate
     protected void onCreate() {
         createdOn = Instant.now();
+        this.tax = this.subtotal.multiply(BigDecimal.valueOf(0.14));
+        this.total = this.subtotal.add(this.tax);
     }
 
     @OneToMany

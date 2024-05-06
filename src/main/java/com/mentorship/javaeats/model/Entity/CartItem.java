@@ -41,7 +41,7 @@ public class CartItem implements Serializable {
     }
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name="cart_item_id")
     @ToString.Exclude
     @MapsId
