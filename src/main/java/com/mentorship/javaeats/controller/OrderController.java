@@ -1,7 +1,7 @@
-/*
 package com.mentorship.javaeats.controller;
 
-import com.mentorship.javaeats.model.CartItem;
+import com.mentorship.javaeats.model.Entity.CartItem;
+import com.mentorship.javaeats.model.dto.response.OrderSummaryResponse;
 import com.mentorship.javaeats.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +20,13 @@ public class OrderController {
     }
 
     @PostMapping("{cartId}/place-order")
-    public ResponseEntity<Void> placeOrder(@PathVariable Integer customerId, @PathVariable Integer cartId,
+    public ResponseEntity<String> placeOrder(@PathVariable Long customerId, @PathVariable Long cartId,
                                            @RequestBody Set<CartItem> cartItems) {
-        orderService.placeOrder(customerId, cartId, cartItems);
-        return ResponseEntity.ok().build();
+        return orderService.placeOrder(customerId, cartId, cartItems);
+    }
+
+    @GetMapping("{orderId}/ordersummary")
+    public ResponseEntity<OrderSummaryResponse> viewOrderSummary(@PathVariable Long customerId, @PathVariable Long orderId) {
+        return orderService.viewOrderSummary(customerId, orderId);
     }
 }
-*/
