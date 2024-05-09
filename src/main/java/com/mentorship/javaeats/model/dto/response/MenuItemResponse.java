@@ -8,19 +8,16 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 @Data
 public class MenuItemResponse {
-    private Long id;
+
     private String name;
     private String description;
     private BigDecimal price;
-    private Integer stockQuantity;
 
 
 
-    public MenuItemResponse(Long id, String name, String description, BigDecimal price, Integer stockQuantity) {
-        this.id = id;
+    public MenuItemResponse(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.stockQuantity = stockQuantity;
     }
 }
