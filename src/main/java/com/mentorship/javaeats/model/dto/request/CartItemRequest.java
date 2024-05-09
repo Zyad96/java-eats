@@ -7,11 +7,9 @@ import java.math.BigDecimal;
 @Data
 public class CartItemRequest {
 
-    private Integer id;
-    private Integer cartId;
-    private Integer menuItemId;
+    private Long id;
+    private Long cartId;
+    private Long menuItemId;
     private Integer quantity;
     private BigDecimal unitPrice;
-    private BigDecimal totalPrice;
-
 }

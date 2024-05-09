@@ -30,7 +30,7 @@ public class Restaurant implements Serializable {
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
 
-    @Column(name = "deleted_on", nullable = false)
+    @Column(name = "deleted_on", nullable = true)
     private Instant deletedOn;
 
     @PrePersist
@@ -56,5 +56,6 @@ public class Restaurant implements Serializable {
     public Restaurant(String name, String status) {
         this.name = name;
         this.status = status;
+        this.isDeleted = false;
     }
 }
