@@ -1,4 +1,4 @@
-package com.mentorship.javaeats.model;
+package com.mentorship.javaeats.model.Entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ public class OrderItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
@@ -24,27 +24,21 @@ public class OrderItem implements Serializable {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @Column(name = "status", nullable = false)
-    private String status;
-
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
-
-    @Column(name = "updated_on", nullable = false)
-    private Instant updatedOn;
-
-    public OrderItem(Integer id, Integer quantity, BigDecimal price, String pending) {
-        this.id = id;
-        this.quantity = quantity;
-        this.price = price;
-        this.status = pending;
-    }
-
 
     @PrePersist
     protected void onCreate() {
         createdOn = Instant.now();
-        updatedOn = Instant.now();
     }
 
+    @ManyToOne
+    @JoinColumn(name = "menu_item_id")
+    private MenuItem menuItem;
+
+    public OrderItem(Integer quantity, BigDecimal price, MenuItem menuItem) {
+        this.quantity = quantity;
+        this.price = price;
+        this.menuItem = menuItem;
+    }
 }
