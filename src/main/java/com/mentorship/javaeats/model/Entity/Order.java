@@ -10,8 +10,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.util.Random;
 import java.util.Set;
 
@@ -41,17 +39,18 @@ public class Order implements Serializable {
     @Formula("subtotal + tax")
     private BigDecimal total;
 
-    public Order(Long customerId, Set<OrderItem> orderItems, int i, BigDecimal subtotal, BigDecimal tax, BigDecimal total) {
-        this.id = customerId;
-        this.orderItems = orderItems;
+    public Order(BigDecimal subtotal, BigDecimal tax, BigDecimal total, OrderStatus orderStatus ,OrderTracking orderTracking){
         this.subtotal = subtotal;
         this.tax = tax;
         this.total = total;
+        this.orderStatus = orderStatus;
+        this.orderTracking = orderTracking;
     }
 
     @PrePersist
+    @PreUpdate
     protected void onCreate() {
-        orderDate = LocalDate.now().atStartOfDay().toInstant(ZoneOffset.UTC);
+        orderDate = Instant.now();
         if(orderTracking != null) {
             orderTracking.setEstimatedDeliveryTime(generateEstimatedDeliveryTime());
         }

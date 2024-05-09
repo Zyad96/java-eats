@@ -14,6 +14,7 @@ import java.time.Instant;
 public class OrderItem implements Serializable {
     private static final long serialVersionUID = -2430065943374712760L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id", nullable = false)
     private Long id;
 
@@ -31,14 +32,13 @@ public class OrderItem implements Serializable {
         createdOn = Instant.now();
     }
 
-    @OneToOne
-    @JoinColumn(name = "order_item_id")
-    @MapsId
+    @ManyToOne
+    @JoinColumn(name = "menu_item_id")
     private MenuItem menuItem;
 
-    public OrderItem(Long id, Integer quantity, BigDecimal price) {
-        this.id = id;
+    public OrderItem(Integer quantity, BigDecimal price, MenuItem menuItem) {
         this.quantity = quantity;
         this.price = price;
+        this.menuItem = menuItem;
     }
 }
