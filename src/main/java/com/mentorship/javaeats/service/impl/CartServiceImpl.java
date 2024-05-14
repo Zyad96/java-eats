@@ -1,13 +1,14 @@
 package com.mentorship.javaeats.service.impl;
 
 
-import com.mentorship.javaeats.model.Entity.Cart;
-import com.mentorship.javaeats.model.Entity.CartItem;
+import com.mentorship.javaeats.model.Entity.*;
 import com.mentorship.javaeats.model.dto.request.CartItemRequest;
 import com.mentorship.javaeats.model.dto.response.CartItemResponse;
 import com.mentorship.javaeats.repository.CartItemRepository;
 import com.mentorship.javaeats.repository.CartRepository;
 import com.mentorship.javaeats.repository.CustomerRepository;
+import com.mentorship.javaeats.repository.MenuItemRepository;
+import com.mentorship.javaeats.service.CartItemService;
 import com.mentorship.javaeats.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,12 +24,17 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
     private final CustomerRepository customerRepository;
+    private final MenuItemRepository menuItemRepository;
+    private final CartItemService cartItemService;
 
     @Autowired
-    public CartServiceImpl(CartItemRepository cartItemRepository, CartRepository cartRepository, CustomerRepository customerRepository) {
+    public CartServiceImpl(CartItemRepository cartItemRepository, CartRepository cartRepository,
+                           CartItemService cartItemService,CustomerRepository customerRepository, MenuItemRepository menuItemRepository) {
         this.cartItemRepository = cartItemRepository;
         this.cartRepository = cartRepository;
         this.customerRepository = customerRepository;
+        this.menuItemRepository=menuItemRepository;
+        this.cartItemService=cartItemService;
     }
 
     @Override
@@ -87,8 +93,26 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public String addToCart(Long menuItemId, Long userId) {
-        return null;
+    public ResponseEntity<String> addToCart(Long menuItemId, Long customerId) {
+        try {
+            if (menuItemId != null) {
+                Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new IllegalArgumentException("Customer not found"));
+                Cart cart = cartRepository.findById(customer.getCart().getId()).orElseThrow(() -> new IllegalArgumentException("Cart not found"));
+                if (checkIfCartContainsCartItem(cart,menuItemId)){
+                cartItemService.assignCartItemToCart(cart, menuItemId);
+                cartRepository.save(cart);
+                return ResponseEntity.status(HttpStatus.OK).body("Menu item Added successfully");
+            }
+                else {
+                    return ResponseEntity.status(HttpStatus.OK).body("Menu item Already Exist");
+                }
+            }
+            else
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Item not found");
+
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // validate if cart exists
@@ -150,7 +174,15 @@ public class CartServiceImpl implements CartService {
         cart.getCartItems().clear();
         cartRepository.save(cart);
     }
-
+    private Boolean checkIfCartContainsCartItem(Cart cart , Long menuItemId){
+        MenuItem menuItem= menuItemRepository.findById(menuItemId).orElseThrow(()->new IllegalArgumentException("Menu Item Not Found"));
+        Set<CartItem> cartItems=cart.getCartItems();
+        for (CartItem item : cartItems){
+            if(item.getMenuItem().equals(menuItem))
+                return false;
+        }
+        return true;
+    }
     // get cart by id
     private Cart getCart(Long cartId) {
         return cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("Cart not found"));

@@ -11,7 +11,7 @@ public interface CartService {
 
     public ResponseEntity<String> updateCartItemQuantity(Long cartId, CartItemRequest cartItemRequest);
 
-    public String addToCart(Long menuItemId, Long userId);
+    public ResponseEntity<String> addToCart(Long menuItemId, Long customerId);
 
     public ResponseEntity<Set<CartItemResponse>> viewCartItems(Long customerId);
 

@@ -18,6 +18,7 @@ import java.time.Instant;
 public class CartItem implements Serializable {
     private static final long serialVersionUID = -8836255250946841875L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_item_id", nullable = false)
     private Long id;
 
@@ -33,6 +34,12 @@ public class CartItem implements Serializable {
     @Column(name = "created_on", nullable = false)
     private Instant createdOn;
 
+    public CartItem(int i, BigDecimal price, MenuItem menuItem) {
+        this.quantity=i;
+        this.unitPrice=price;
+        this.menuItem=menuItem;
+    }
+
     @PrePersist
     @PreUpdate
     protected void onCreate() {
@@ -41,9 +48,8 @@ public class CartItem implements Serializable {
     }
 
 
-    @OneToOne
-    @JoinColumn(name="cart_item_id")
+    @ManyToOne
+    @JoinColumn(name="menu_item_id")
     @ToString.Exclude
-    @MapsId
     private MenuItem menuItem;
 }

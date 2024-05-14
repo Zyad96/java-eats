@@ -1,6 +1,12 @@
 package com.mentorship.javaeats.service;
 
+import com.mentorship.javaeats.model.Entity.Cart;
+import com.mentorship.javaeats.model.Entity.CartItem;
+
+import java.math.BigDecimal;
+
 public interface CartItemService {
 
-    public void addCartItem(Integer menuItemId, Integer quantity , Double Price);
+    public CartItem createCartItem(Long menuItemId);
+    public void assignCartItemToCart(Cart cart, Long menuItemId);
 }
