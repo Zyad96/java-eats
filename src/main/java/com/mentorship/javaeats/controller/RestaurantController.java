@@ -1,10 +1,13 @@
 package com.mentorship.javaeats.controller;
 
+import com.mentorship.javaeats.model.Entity.Restaurant;
 import com.mentorship.javaeats.model.dto.request.RestaurantRegistrationRequest;
 import com.mentorship.javaeats.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/restaurants")
@@ -25,5 +28,10 @@ public class RestaurantController {
     @PutMapping("{userId}/{restaurantId}/toggle-status")
     public ResponseEntity<String> toggleRestaurantStatus(@PathVariable Long userId, @PathVariable Long restaurantId) {
         return restaurantService.toggleRestaurantStatus(userId, restaurantId);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Restaurant>> viewAllRestaurants(){
+        return restaurantService.viewAllRestaurants();
     }
 }

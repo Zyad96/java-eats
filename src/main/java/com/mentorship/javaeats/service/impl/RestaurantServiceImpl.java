@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
 
@@ -59,6 +61,17 @@ public class RestaurantServiceImpl implements RestaurantService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public ResponseEntity<List<Restaurant>> viewAllRestaurants() {
+       List <Restaurant> restaurantList= restaurantRepository.findAll();
+       if(!restaurantList.isEmpty()){
+           return ResponseEntity.ok(restaurantList);
+       }
+       else
+
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     // check if user is admin
